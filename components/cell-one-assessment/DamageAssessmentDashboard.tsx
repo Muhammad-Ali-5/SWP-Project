@@ -27,7 +27,7 @@ export function DamageAssessmentDashboard() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.25 }}
-      className="rounded-xl border border-slate-800 bg-slate-950/90 p-6 md:p-8 shadow-xl shadow-blue-950/20"
+      className="rounded-xl border border-slate-800 w-full bg-slate-950/90 p-2 md:p-8 shadow-xl shadow-blue-950/20"
     >
       <div className="mb-6 flex flex-col gap-4 border-b border-slate-800 pb-4 md:flex-row md:items-end md:justify-between">
         <div>

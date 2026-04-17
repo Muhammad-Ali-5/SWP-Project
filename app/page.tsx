@@ -32,7 +32,7 @@ export default function Home() {
             viewport={{ once: true, margin: "-100px" }}
             variants={sectionVariants}
           >
-            <Card className="bg-slate-900/50 border-blue-500/20 backdrop-blur-sm shadow-2xl shadow-blue-900/10 rounded-3xl overflow-hidden p-8 md:p-12 relative">
+            <Card className="bg-slate-900/50 border-blue-500/20 backdrop-blur-sm shadow-2xl shadow-blue-900/10 rounded-3xl overflow-hidden  md:p-12 relative">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-transparent opacity-50" />
               <CellOneAssessment />
             </Card>

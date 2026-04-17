@@ -9,10 +9,10 @@ export function LegalEthicalMatrix() {
   return (
     <motion.section
       variants={cardVariants}
-      initial="hidden"
+      // initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="rounded-xl border border-slate-800 bg-slate-950/90 p-6 md:p-8 shadow-xl shadow-cyan-950/15"
+      className="rounded-xl border border-slate-800 bg-slate-950/90 p-2 md:p-8 shadow-xl shadow-cyan-950/15"
     >
       <div className="mb-6 flex flex-col gap-4 border-b border-slate-800 pb-4 md:flex-row md:items-end md:justify-between">
         <div>
@@ -112,8 +112,8 @@ export function LegalEthicalMatrix() {
                 whileHover={{ y: -2, scale: 1.005 }}
                 className="rounded-lg border border-slate-800 bg-slate-950/70 p-4 transition-colors hover:border-cyan-500/40"
               >
-                <div className="flex items-start gap-3">
-                  <div className="w-20 shrink-0 rounded-md border border-cyan-500/20 bg-cyan-500/10 px-2 py-1 text-center text-xs font-semibold text-cyan-200">
+                <div className="md:flex space-y-2 items-start gap-3">
+                  <div className="w-20   shrink-0 rounded-md border border-cyan-500/20 bg-cyan-500/10 px-2 py-1 text-center text-xs font-semibold text-cyan-200">
                     {row.article}
                   </div>
                   <div className="min-w-0 flex-1">
