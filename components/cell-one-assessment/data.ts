@@ -194,3 +194,123 @@ export const legalSignalMeters = [
   { label: "Education System Disruption", value: 98, color: "from-yellow-500 to-amber-300" },
   { label: "Movement Restriction Severity", value: 92, color: "from-cyan-500 to-blue-400" },
 ];
+
+export type PriorityIntervention = {
+  level: "P1" | "P2" | "P3";
+  title: string;
+  urgency: string;
+  timeframe: string;
+  color: string;
+  borderColor: string;
+  focus: string;
+  details: { heading: string; points: string[] }[];
+};
+
+export const priorityInterventions: PriorityIntervention[] = [
+  {
+    level: "P1",
+    title: "Immediate Rescue",
+    urgency: "Extreme / Critical",
+    timeframe: "0–72 hours",
+    color: "from-rose-500 to-red-500",
+    borderColor: "border-rose-500",
+    focus: "Preservation of human life through emergency healthcare, safe evacuation, and access to clean water.",
+    details: [
+      {
+        heading: "Medical Corridors",
+        points: [
+          "94% of hospitals damaged, only 18 partially functional (50%)",
+          "172,137 people injured with overwhelming healthcare demand",
+          "Safe transport corridors critical for emergency aid delivery",
+        ],
+      },
+      {
+        heading: "Clean Water Access",
+        points: [
+          "70% of water infrastructure damaged, 162 of 284 wells destroyed",
+          "Per capita availability: 3L/day (WHO minimum: 15L/day)",
+          "Deploy mobile desalination and emergency water trucking systems",
+        ],
+      },
+      {
+        heading: "Emergency Supplies",
+        points: [
+          "Food supply at <5% of required availability",
+          "1.9M people (90% population) internally displaced",
+          "77% in IPC Phase 3+ food insecurity with confirmed famine",
+        ],
+      },
+    ],
+  },
+  {
+    level: "P2",
+    title: "Rehabilitation",
+    urgency: "High",
+    timeframe: "3 days – 3 months",
+    color: "from-amber-500 to-yellow-500",
+    borderColor: "border-amber-500",
+    focus: "Restoring human well-being and psychological stability, especially among vulnerable populations.",
+    details: [
+      {
+        heading: "Trauma Triage for Children",
+        points: [
+          "19,000–39,000 orphaned children requiring immediate care",
+          "17,000 unaccompanied or separated children",
+          "Widespread cases of WCNSF (Wounded Child, No Surviving Family)",
+        ],
+      },
+      {
+        heading: "Psychosocial Programs",
+        points: [
+          "Average 3-4 repeated displacements per person (up to 10 times for some)",
+          "Community counseling and peer support critical for trauma recovery",
+          "Early intervention reduces long-term mental health impacts by 30-40%",
+        ],
+      },
+      {
+        heading: "Education Continuity",
+        points: [
+          "97.5% of schools damaged/destroyed",
+          "637,000–658,000 children out of school for 2+ years",
+          "Temporary learning spaces essential for cognitive development",
+        ],
+      },
+    ],
+  },
+  {
+    level: "P3",
+    title: "Rebuilding",
+    urgency: "Moderate to Low",
+    timeframe: "3 months – years",
+    color: "from-cyan-500 to-blue-500",
+    borderColor: "border-cyan-500",
+    focus: "Reconstruction of infrastructure and restoration of long-term socio-economic systems.",
+    details: [
+      {
+        heading: "Infrastructure Restoration",
+        points: [
+          "81% of all structures affected (198,273 structures)",
+          "320,622 housing units damaged or destroyed",
+          "Water, electricity, and transportation systems require systemic reconstruction",
+        ],
+      },
+      {
+        heading: "School System Rehabilitation",
+        points: [
+          "91.8% of schools require full reconstruction",
+          "All universities and higher education severely damaged",
+          "Education system at near-total collapse requiring major investment",
+        ],
+      },
+      {
+        heading: "Economic Recovery",
+        points: [
+          "Infrastructure collapse has disrupted all livelihoods",
+          "Restricted mobility and crossing constraints limit supply chains",
+          "Large-scale employment generation and reconstruction funding required",
+        ],
+      },
+    ],
+  },
+];
+
