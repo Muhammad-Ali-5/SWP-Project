@@ -38,6 +38,7 @@ import {
 
 export default function CellTwoLogistics() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [chartsInView, setChartsInView] = useState(false);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -362,11 +363,13 @@ export default function CellTwoLogistics() {
               </CardTitle>
             </CardHeader>
             <CardContent className="h-[220px] w-full px-3 pb-3">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={aidData}
-                  margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
-                >
+              <motion.div className="w-full h-full" onViewportEnter={() => setChartsInView(true)} viewport={{ once: true, margin: "-50px" }}>
+                {chartsInView && (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={aidData}
+                      margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+                    >
                   <defs>
                     <linearGradient id="barGlow" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="#10b981" />
@@ -423,6 +426,8 @@ export default function CellTwoLogistics() {
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
+                )}
+              </motion.div>
             </CardContent>
           </Card>
 
@@ -434,8 +439,10 @@ export default function CellTwoLogistics() {
               </CardTitle>
             </CardHeader>
             <CardContent className="h-[270px] w-full relative pb-3 pt-0">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
+              <motion.div className="w-full h-full" onViewportEnter={() => setChartsInView(true)} viewport={{ once: true, margin: "-50px" }}>
+                {chartsInView && (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
                   <Pie
                     activeIndex={activeIndex}
                     activeShape={renderActiveShape}
@@ -471,6 +478,8 @@ export default function CellTwoLogistics() {
                   />
                 </PieChart>
               </ResponsiveContainer>
+                )}
+              </motion.div>
             </CardContent>
           </Card>
 
