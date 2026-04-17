@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import HeroHeader from "./components/HeroHeader";
 import CellOneAssessment from "./components/CellOneAssessment";
 import CellTwoLogistics from "./components/CellTwoLogistics";
@@ -8,7 +8,7 @@ import CellThreeImplementation from "./components/CellThreeImplementation";
 import { Card } from "@/components/ui/card";
 
 export default function Home() {
-  const sectionVariants = {
+  const sectionVariants: Variants = {
     hidden: { opacity: 0, y: 50 },
     visible: { 
       opacity: 1, 

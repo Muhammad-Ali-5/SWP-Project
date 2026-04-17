@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import CountUp from "react-countup";
 import {
   BarChart,
@@ -36,11 +36,14 @@ import {
   Wifi,
 } from "lucide-react";
 
+// Bypass rigid Recharts 3.x generic typings for active props
+const TypedPie = Pie as any;
+
 export default function CellTwoLogistics() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [chartsInView, setChartsInView] = useState(false);
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -50,7 +53,7 @@ export default function CellTwoLogistics() {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
@@ -64,10 +67,10 @@ export default function CellTwoLogistics() {
     { name: "Alkhidmat", tons: 6524 },
   ];
 
-  const allocationData = [
+  const allocationData: any[] = [
     { name: "Immediate Rescue", value: 45 },
-    { name: "Rehabilitation", value: 25 },
-    { name: "Rebuilding", value: 30 },
+    { name: "Rehabilitation", value: 35 },
+    { name: "Rebuilding", value: 20 },
   ];
 
   const COLORS = ["#ef4444", "#8b5cf6", "#3b82f6"];
@@ -443,7 +446,7 @@ export default function CellTwoLogistics() {
                 {chartsInView && (
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
-                  <Pie
+                  <TypedPie
                     activeIndex={activeIndex}
                     activeShape={renderActiveShape}
                     data={allocationData}
@@ -465,7 +468,7 @@ export default function CellTwoLogistics() {
                         fill={COLORS[index % COLORS.length]}
                       />
                     ))}
-                  </Pie>
+                  </TypedPie>
                   <Tooltip content={<PieTooltip />} />
                   <Legend
                     verticalAlign="bottom"
