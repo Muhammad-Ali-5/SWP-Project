@@ -3,7 +3,6 @@
 import { motion, Variants } from "framer-motion";
 import HeroHeader from "./components/HeroHeader";
 import ProjectIntroduction from "./components/ProjectIntroduction";
-import RouteAssessment from "./components/RouteAssessment";
 import CellOneAssessment from "./components/CellOneAssessment";
 import CellTwoLogistics from "./components/CellTwoLogistics";
 import CellThreeImplementationV2 from "./components/CellThreeImplementationV2";
