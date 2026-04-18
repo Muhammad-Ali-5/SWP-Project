@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { Bar, BarChart, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { ChartContainer } from "@/components/ui/chart";
 import type { ChartConfig } from "@/components/ui/chart";
@@ -21,6 +22,25 @@ const damageChartConfig = {
 } satisfies ChartConfig;
 
 export function DamageAssessmentDashboard() {
+  const chartRef = useRef<HTMLDivElement | null>(null);
+  const pieRef = useRef<HTMLDivElement | null>(null);
+  const chartInView = useInView(chartRef, { once: false, amount: 0.45 });
+  const pieInView = useInView(pieRef, { once: false, amount: 0.45 });
+  const [chartSeed, setChartSeed] = useState(0);
+  const [pieSeed, setPieSeed] = useState(0);
+
+  useEffect(() => {
+    if (chartInView) {
+      setChartSeed((value) => value + 1);
+    }
+  }, [chartInView]);
+
+  useEffect(() => {
+    if (pieInView) {
+      setPieSeed((value) => value + 1);
+    }
+  }, [pieInView]);
+
   return (
     <motion.section
       variants={cardVariants}
@@ -61,7 +81,11 @@ export function DamageAssessmentDashboard() {
       </motion.div>
 
       <div className="mt-8 flex flex-col gap-6 lg:flex-row">
-        <motion.div variants={itemVariants} className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 md:p-5 lg:flex-[1.1]">
+        <motion.div
+          ref={chartRef}
+          variants={itemVariants}
+          className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 md:p-5 lg:flex-[1.1]"
+        >
           <div className="mb-4 flex items-center justify-between gap-3">
             <h4 className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-200">Structural damage chart</h4>
             <span className="text-xs text-slate-400">198,273 affected structures</span>
@@ -71,7 +95,7 @@ export function DamageAssessmentDashboard() {
             config={damageChartConfig}
             className="h-70 w-full [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-transparent"
           >
-            <BarChart data={damageChartData} margin={{ top: 12, right: 8, left: -16, bottom: 0 }}>
+            <BarChart key={chartSeed} data={damageChartData} margin={{ top: 12, right: 8, left: -16, bottom: 0 }}>
               <defs>
                 <linearGradient id="damageGlow" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="#22d3ee" />
@@ -81,7 +105,14 @@ export function DamageAssessmentDashboard() {
               <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fill: "#94a3b8", fontSize: 12 }} />
               <YAxis tickLine={false} axisLine={false} tick={{ fill: "#94a3b8", fontSize: 12 }} />
               <Tooltip content={<DamageBarTooltip />} cursor={false} />
-              <Bar dataKey="value" radius={[8, 8, 0, 0]} isAnimationActive animationDuration={1700} activeBar={false}>
+              <Bar
+                dataKey="value"
+                radius={[8, 8, 0, 0]}
+                isAnimationActive={chartInView}
+                animationDuration={1700}
+                animationBegin={0}
+                activeBar={false}
+              >
                 {damageChartData.map((entry) => (
                   <Cell key={entry.name} fill={entry.fill} />
                 ))}
@@ -90,7 +121,11 @@ export function DamageAssessmentDashboard() {
           </ChartContainer>
         </motion.div>
 
-        <motion.div variants={itemVariants} className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 md:p-5 lg:w-[320px] lg:flex-none">
+        <motion.div
+          ref={pieRef}
+          variants={itemVariants}
+          className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 md:p-5 lg:w-[320px] lg:flex-none"
+        >
           <div className="mb-4 flex items-center justify-between gap-3">
             <h4 className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-200">Damage mix</h4>
             <span className="text-xs text-slate-400">Share of affected stock</span>
@@ -98,8 +133,18 @@ export function DamageAssessmentDashboard() {
 
           <div className="mx-auto h-55 w-full max-w-65">
             <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie data={damageChartData} dataKey="value" nameKey="name" innerRadius={64} outerRadius={92} paddingAngle={4}>
+              <PieChart key={pieSeed}>
+                <Pie
+                  data={damageChartData}
+                  dataKey="value"
+                  nameKey="name"
+                  innerRadius={64}
+                  outerRadius={92}
+                  paddingAngle={4}
+                  isAnimationActive={pieInView}
+                  animationDuration={1500}
+                  animationBegin={0}
+                >
                   {damageChartData.map((entry) => (
                     <Cell key={entry.name} fill={entry.fill} />
                   ))}

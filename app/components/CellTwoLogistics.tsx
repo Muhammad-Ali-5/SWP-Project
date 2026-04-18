@@ -35,6 +35,7 @@ import {
   PackageOpen,
   Wifi,
 } from "lucide-react";
+import RouteAssessment from "./RouteAssessment";
 
 // Bypass rigid Recharts 3.x generic typings for active props
 const TypedPie = Pie as any;
@@ -161,7 +162,9 @@ export default function CellTwoLogistics() {
         <p className="text-slate-400 mt-2 text-sm uppercase tracking-[0.2em] font-mono">
           Logistical Routing // Anticipation Pipeline // The 3 A's
         </p>
+
       </motion.div>
+            <RouteAssessment />
 
       {/* PANEL 1: THE LOGISTICAL BLUEPRINT */}
       <motion.div variants={itemVariants}>
