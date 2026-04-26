@@ -2,6 +2,7 @@
 
 import { motion, Variants } from "framer-motion";
 import { Card } from "@/components/ui/card";
+import Image from "next/image";
 
 export default function CellThreeImplementation() {
   const containerVariants: Variants = {
@@ -386,6 +387,27 @@ export default function CellThreeImplementation() {
             </div>
           </div>
         </Card>
+      </motion.div>
+
+      {/* Operational Map */}
+      <motion.div variants={itemVariants}>
+        <h3 className="text-3xl font-bold text-slate-50 mb-8 text-center">
+          <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+            Operational Coverage Map
+          </span>
+        </h3>
+        <div className="relative p-1 rounded-2xl bg-gradient-to-r from-purple-500/40 via-pink-500/40 to-purple-500/40 shadow-2xl">
+          <div className="bg-slate-900/80 backdrop-blur-lg rounded-2xl p-8 overflow-hidden">
+            <Image
+              src="/map.jpeg"
+              alt="Operational Coverage Map"
+              width={800}
+              height={600}
+              className="rounded-xl w-full h-auto shadow-lg"
+              priority
+            />
+          </div>
+        </div>
       </motion.div>
 
       {/* Training Framework */}
