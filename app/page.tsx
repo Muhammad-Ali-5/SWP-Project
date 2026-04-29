@@ -6,6 +6,7 @@ import ProjectIntroduction from "./components/ProjectIntroduction";
 import CellOneAssessment from "./components/CellOneAssessment";
 import CellTwoLogistics from "./components/CellTwoLogistics";
 import CellThreeImplementationV2 from "./components/CellThreeImplementationV2";
+import BiestekFrameworkSection from "./components/cell-three-pdf/BiestekFrameworkSection";
 import { Card } from "@/components/ui/card";
 
 export default function Home() {
@@ -84,6 +85,17 @@ export default function Home() {
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-600 to-transparent opacity-50" />
               <CellThreeImplementationV2 />
             </Card>
+          </motion.div>
+        </section>
+
+        <section id="cell-3-pdf" className="py-20 md:px-8 lg:px-24 border-t border-white/5 bg-slate-950/90">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={sectionVariants}
+          >
+            <BiestekFrameworkSection />
           </motion.div>
         </section>
         
