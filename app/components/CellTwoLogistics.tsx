@@ -164,7 +164,7 @@ export default function CellTwoLogistics() {
         </p>
 
       </motion.div>
-            <RouteAssessment />
+
 
       {/* PANEL 1: THE LOGISTICAL BLUEPRINT */}
       <motion.div variants={itemVariants}>
@@ -303,6 +303,8 @@ export default function CellTwoLogistics() {
           </Card>
         </div>
       </motion.div>
+
+        <RouteAssessment />
 
       {/* PANEL 2: THE ECONOMIC ENGINE & 3 A's */}
       <motion.div variants={itemVariants} className="pt-8">
