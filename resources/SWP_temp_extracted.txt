@@ -1,0 +1,205 @@
+CELL 3: Applying Micro-Level Case Work Principles via 
+Tech 
+ 
+Felix Biestek's 7 Principles of Case Work - Digital Implementation 
+Framework 
+ 
+ 
+Principle 1: Individualization 
+Clinical Definition: Recognizing each client as a unique individual with their own 
+experiences, traumas, and needs. No two cases are identical. 
+The Challenge in Gaza: In shelters with thousands of displaced people, workers 
+naturally see a "crowd" rather than individuals. Aid fatigue leads to standardized 
+responses. 
+Tech Solution: Digital Case File System with QR Code identification. 
+How It Works: 
+- Every child receives a wristband with a unique QR code 
+- The mobile app stores each child's specific trauma history, family status, and 
+behavioral patterns 
+- When a volunteer scans the QR code, the app displays custom guidance 
+ 
+Example: 
+- Volunteer scans child's QR code 
+- App displays: "This child is an orphan. Both parents deceased. Avoid asking 
+about 'your family.' Focus on 'your safety.'" 
+- Outcome: The volunteer treats the child as an individual, not one of thousands 
+ 
+ 
+Principle 2: Purposeful Expression of Feelings 
+Clinical Definition: Allowing clients to express their emotions freely, especially 
+negative feelings like anger, grief, and fear. Expression is the first step toward 
+healing. 
+The Challenge in Gaza: No private spaces exist in bombed-out shelters. Children 
+cannot speak openly because others are listening. 
+Tech Solution: "Green Zone" Geofencing + Digital Expression Tools 
+How It Works: 
+- The mesh network designates specific physical locations (tents, quiet corners) as 
+"Green Zones" 
+- When a volunteer enters a Green Zone with a child, the app triggers a calming 
+interface 
+- The app provides non-verbal expression tools: emoji grids, drawing canvas, digital 
+sandtray 
+ 
+ 
+
+Example: 
+- Volunteer takes child to Green Zone tent 
+- Volunteer opens Drawing Tool on tablet 
+- Volunteer says: "You can show me how you feel. There is no wrong way." 
+- Child draws the explosion they witnessed 
+- Outcome:The child expresses grief without being forced to find words 
+ 
+ 
+Principle 3: Controlled Emotional Involvement 
+Clinical Definition: The worker responds with sensitivity and empathy but maintains 
+professional objectivity. The worker feels with the client, not for the client. 
+The Challenge in Gaza: Local volunteers are also traumatized. They may become 
+overwhelmed by the child's pain, losing the ability to help. 
+Tech Solution: Remote Therapist Relay + Emotional Check-In Prompts 
+How It Works: 
+- The app automatically prompts volunteers to log their own emotional state 
+- When a case becomes too heavy, the volunteer can escalate to a remote therapist 
+in Pakistan 
+- The remote therapist guides the intervention while the volunteer acts as "hands and 
+eyes" 
+ 
+Example: 
+- Volunteer feels overwhelmed by a child's story of losing their mother 
+- Volunteer presses "Escalate" button in app 
+- Remote therapist in Pakistan texts: "You have done well. Now step back. Let the child 
+draw. I will guide you." 
+- Outcome: Volunteer remains effective because emotional burden is shared with the 
+remote therapist 
+ 
+ 
+Principle 4: Acceptance 
+Clinical Definition: Accepting the client as they are, including their weaknesses, 
+fears, anger, and regressive behaviors. Acceptance is not approval; it is recognition 
+of reality. 
+The Challenge in Gaza: Children may exhibit regressive behaviors (bedwetting, 
+thumb-sucking, baby talk) that frustrate exhausted volunteers. 
+Tech Solution: Behavioral Normalization Prompts 
+How It Works: 
+- The app provides real-time scripts that normalize regressive behaviors 
+- Volunteers are taught that regression is a sign of trauma, not "bad behavior" 
+ 
+Example: 
+- Child, age 8, starts wetting the bed and sucking thumb 
+- Volunteer feels frustrated 
+
+- App displays: "This child is regressing to an earlier developmental stage. This is normal 
+for trauma. Do not shame. Say: 'Many children here are having accidents. It is okay. Let me 
+help you clean up.'" 
+- Outcome: The child is accepted as they are, not punished for trauma symptoms 
+ 
+ 
+ 
+Principle 5: Non-Judgmental Attitude 
+Clinical Definition: Avoiding judgment of the client's behavior, values, or coping 
+mechanisms. The worker does not label behavior as "good" or "bad." 
+The Challenge in Gaza: Traumatized children may act aggressively (biting, 
+screaming, throwing things). Volunteers may naturally react with judgment or 
+punishment. 
+Tech Solution: "Crisis Mode" Script Shield 
+How It Works: 
+- The app features a "Crisis Mode" button for aggressive or dysregulated behavior 
+- The AI generates a non-judgmental script for the volunteer to read 
+ 
+Example: 
+- Child throws food tray and screams "I hate you!" 
+- Volunteer presses Crisis Mode button 
+- App displays:"Do NOT say 'Stop being bad.' Say: 'I see you are very angry. That is okay. 
+Can we sit together for one minute? No talking.'" 
+- Volunteer reads script aloud calmly 
+- Outcome: The child's aggression is accepted as a symptom of trauma, not punished as 
+misbehavior 
+ 
+ 
+Principle 6: Client Self-Determination 
+Clinical Definition: Recognizing the client's right to make their own choices about 
+their life and treatment. The worker guides but does not control. 
+The Challenge in Gaza: In crisis situations, workers often take complete control 
+because "we know what's best." This disempowers the child. 
+Tech Solution: Choice Interface (A/B Options) 
+How It Works: 
+- The app presents two acceptable options to the child 
+- The child chooses which one to do 
+- The volunteer honors the choice 
+ 
+Example: 
+- Volunteer opens Choice Interface on tablet 
+- App displays: "Ask the child: 'Do you want to draw a picture OR play with the sand tray?'" 
+- Volunteer asks the question 
+- Child points to sand tray 
+- Volunteer says: "Good choice. Let's play with the sand together." 
+
+- Outcome: The child exercises agency and control in a situation where everything else is 
+out of their control 
+ 
+ 
+Principle 7: Confidentiality 
+Clinical Definition: Protecting the client's private information. The child's trauma 
+history, family situation, and expressions are shared only with authorized 
+professionals. 
+The Challenge in Gaza: Multiple volunteers may work with the same child. 
+Information can easily leak through gossip or careless conversation. 
+Tech Solution: Encrypted Digital Case Files + Access Controls 
+How It Works: 
+- All case files are encrypted with AES-256 on the device 
+- Files are transmitted only via encrypted mesh channels 
+- Access is logged and audited 
+- Volunteers see only what they need to see 
+ 
+Example: 
+- Volunteer A accesses a child's case file 
+- App logs: Volunteer A, Device ID XYZ, Timestamp, Action: View 
+- Volunteer B asks Volunteer A: "What happened to that child?" 
+- Volunteer A's app displays reminder: "Do not discuss case details verbally. Refer 
+Volunteer B to the system." 
+- Outcome: The child's trauma story is protected from gossip and re-exposure 
+ 
+Summary Table: Tech Implementation of Biestek's 7 Principles 
+ 
+          Principle        Tech Solution        Volunteer Action  
+Individualization  QR Code + Digital Case 
+File  
+Scan ID, read custom 
+prompt 
+Purposeful Expression Green Zone + Drawing 
+Tool  
+Guide child to draw/play  
+Controlled Emotional 
+Involvement 
+Remote Therapist Relay Press "Escalate" when 
+overwhelmed 
+Acceptance Behavioral Normalization 
+Prompts 
+Read normalization script  
+Non-Judgmental Attitude Crisis Mode + Script 
+Shield  
+Press button, read script  
+Client Self-Determination  Choice Interface (A/B)  Present two options, 
+honor choice 
+
+Confidentiality Encrypted Files + Access 
+Logs 
+Never discuss cases 
+verbally 
+ 
+ Technical Requirements for Implementation 
+ 
+                Requirement                    Specification 
+Mobile Device Ruggedized Android smartphone (5,000 
+units) 
+App Features  QR scanner, Drawing tool, Sandtray 
+simulator, Script library, Escalation 
+button 
+Encryption AES-256 for all stored and transmitted 
+data 
+Connectivity Mesh network (offline-first) + Satellite 
+backhaul for escalation  
+Training  4-hour module on Biestek's principles + 
+App usage 
+ 
+ 
+ 
