@@ -20,14 +20,14 @@ export default function Home() {
   };
 
   return (
-    <main className="bg-slate-950 text-slate-50 font-sans selection:bg-blue-500/30 overflow-x-hidden">
+    <main className="bg-white text-slate-900 font-sans selection:bg-blue-500/30 overflow-x-hidden">
       
       <HeroHeader />
 
       <ProjectIntroduction />
 
       {/* PHASE 2: ECONOMIC ENGINE */}
-      <div className="bg-gradient-to-b from-slate-950 via-slate-900/50 to-slate-950 border-b border-white/5">
+      <div className="bg-gradient-to-b from-white via-slate-100/50 to-white border-b border-black/5">
         <motion.div 
           className="max-w-7xl mx-auto py-16 px-4 md:px-8 lg:px-24 text-center"
           initial={{ opacity: 0, y: -20 }}
@@ -41,17 +41,17 @@ export default function Home() {
 
 
 
-      <div className="relative z-10 bg-slate-950">
+      <div className="relative z-10 bg-white">
         
         {/* CELL 1: ASSESSMENT */}
-        <section id="cell-1" className="min-h-screen py-32 px-4 md:px-8 lg:px-24 border-b border-white/5 relative">
+        <section id="cell-1" className="min-h-screen py-32 px-4 md:px-8 lg:px-24 border-b border-black/5 relative">
           <motion.div 
             initial="hidden" 
             whileInView="visible" 
             viewport={{ once: true, margin: "-100px" }}
             variants={sectionVariants}
           >
-            <Card className="bg-slate-900/50 border-blue-500/20 backdrop-blur-sm shadow-2xl shadow-blue-900/10 rounded-3xl overflow-hidden  md:p-12 relative">
+            <Card className="bg-slate-50 border-blue-500/20 backdrop-blur-sm shadow-2xl shadow-blue-100/10 rounded-3xl overflow-hidden  md:p-12 relative">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-transparent opacity-50" />
               <CellOneAssessment />
             </Card>
@@ -59,14 +59,14 @@ export default function Home() {
         </section>
 
         {/* CELL 2: LOGISTICS */}
-        <section id="cell-2" className="min-h-screen py-32  md:px-8 lg:px-24 border-b border-white/5 bg-slate-900/20 relative">
+        <section id="cell-2" className="min-h-screen py-32  md:px-8 lg:px-24 border-b border-black/5 bg-slate-100/20 relative">
           <motion.div 
             initial="hidden" 
             whileInView="visible" 
             viewport={{ once: true, margin: "-100px" }}
             variants={sectionVariants}
           >
-            <Card className="bg-slate-900/50 border-emerald-500/20 backdrop-blur-sm shadow-2xl shadow-emerald-900/10 rounded-3xl overflow-hidden p-8 md:p-12 relative">
+            <Card className="bg-slate-50 border-emerald-500/20 backdrop-blur-sm shadow-2xl shadow-emerald-100/10 rounded-3xl overflow-hidden p-8 md:p-12 relative">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-600 to-transparent opacity-50" />
               <CellTwoLogistics />
             </Card>
@@ -81,14 +81,14 @@ export default function Home() {
             viewport={{ once: true, margin: "-100px" }}
             variants={sectionVariants}
           >
-            <Card className="bg-slate-900/50 border-purple-500/20 backdrop-blur-sm shadow-2xl shadow-purple-900/10 rounded-3xl overflow-hidden p-8 md:p-12 relative">
+            <Card className="bg-slate-50 border-purple-500/20 backdrop-blur-sm shadow-2xl shadow-purple-100/10 rounded-3xl overflow-hidden p-8 md:p-12 relative">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-600 to-transparent opacity-50" />
               <CellThreeImplementationV2 />
             </Card>
           </motion.div>
         </section>
 
-        <section id="cell-3-pdf" className="py-20 md:px-8 lg:px-24 border-t border-white/5 bg-slate-950/90">
+        <section id="cell-3-pdf" className="py-20 md:px-8 lg:px-24 border-t border-black/5 bg-white/90">
           <motion.div
             initial="hidden"
             whileInView="visible"

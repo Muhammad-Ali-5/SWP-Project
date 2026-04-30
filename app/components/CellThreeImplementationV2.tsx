@@ -170,25 +170,25 @@ export default function CellThreeImplementation() {
     >
       {/* Header */}
       <motion.div variants={itemVariants} className="text-center mb-12">
-        <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent">
+        <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-linear-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent">
           Tele-Social Work Framework for Rescue Coordination
         </h2>
-        <p className="text-slate-300 text-lg max-w-3xl mx-auto leading-relaxed">
+        <p className="text-slate-800 text-lg max-w-3xl mx-auto leading-relaxed">
           Vehicle-based mesh communication network enabling real-time humanitarian rescue operations, medical evacuations, and resource coordination without relying on destroyed infrastructure
         </p>
       </motion.div>
 
       {/* Critical Challenge */}
       <motion.div variants={itemVariants}>
-        <Card className="bg-gradient-to-r from-red-900/20 via-orange-900/20 to-red-900/20 border border-red-500/30 backdrop-blur-lg p-8 shadow-2xl">
+        <Card className="bg-linear-to-r from-red-900/20 via-orange-900/20 to-red-900/20 border border-red-500/30 backdrop-blur-lg p-8 shadow-2xl">
           <div className="flex gap-4 items-start">
-            <span className="text-4xl flex-shrink-0">⚠️</span>
+            <span className="text-4xl shrink-0">⚠️</span>
             <div>
-              <h3 className="text-2xl font-bold text-red-300 mb-3">The Critical Problem</h3>
-              <p className="text-slate-300 leading-relaxed mb-4">
-                With <span className="font-bold text-red-400">86% of physical humanitarian aid intercepted or looted</span> before reaching civilians, and <span className="font-bold text-red-400">1.9 million people displaced (90% of Gaza's population)</span>, traditional logistics has failed. Water availability in North Gaza stands at just <span className="font-bold text-red-400">3 liters per person daily</span> (WHO minimum: 15L). Famine was officially confirmed in August 2025.
+              <h3 className="text-2xl font-bold text-red-800 mb-3">The Critical Problem</h3>
+              <p className="text-slate-800 leading-relaxed mb-4">
+                With <span className="font-bold text-red-700">86% of physical humanitarian aid intercepted or looted</span> before reaching civilians, and <span className="font-bold text-red-700">1.9 million people displaced (90% of Gaza's population)</span>, traditional logistics has failed. Water availability in North Gaza stands at just <span className="font-bold text-red-7RESCUE00">3 liters per person daily</span> (WHO minimum: 15L). Famine was officially confirmed in August 2025.
               </p>
-              <p className="text-slate-300 leading-relaxed">
+              <p className="text-slate-800 leading-relaxed">
                 <strong>The solution:</strong> Digital-first rescue coordination using vehicle-based mesh networks that bypass physical blockades and enable real-time triage, evacuation coordination, and resource distribution directly to affected communities.
               </p>
             </div>
@@ -209,10 +209,10 @@ export default function CellThreeImplementation() {
             transition={{ delay: idx * 0.1 }}
             viewport={{ once: true }}
           >
-            <Card className="bg-slate-900/60 border border-purple-500/30 p-6 text-center">
+            <Card className="bg-white border border-gray-200 p-6 text-center shadow-sm">
               <div className="text-3xl mb-2">{stat.icon}</div>
-              <p className="text-2xl font-bold text-purple-300 mb-1">{stat.value}</p>
-              <p className="text-xs text-slate-400">{stat.label}</p>
+              <p className="text-2xl font-bold text-purple-700 mb-1">{stat.value}</p>
+              <p className="text-xs text-slate-600">{stat.label}</p>
             </Card>
           </motion.div>
         ))}
@@ -220,8 +220,8 @@ export default function CellThreeImplementation() {
 
       {/* 3R Model */}
       <motion.div variants={itemVariants}>
-        <h3 className="text-3xl font-bold text-slate-50 mb-8 text-center">
-          The <span className="bg-gradient-to-r from-red-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">3R Model</span>
+        <h3 className="text-3xl font-bold text-slate-900 mb-8 text-center">
+          The <span className="bg-linear-to-r from-red-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">3R Model</span>
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {threeRModel.map((model, idx) => (
@@ -233,7 +233,7 @@ export default function CellThreeImplementation() {
               viewport={{ once: true }}
             >
               <Card
-                className={`bg-gradient-to-br ${model.color} backdrop-blur-lg p-8 h-full border shadow-xl hover:shadow-2xl transition-all duration-300`}
+                className={`bg-linear-to-br ${model.color} backdrop-blur-lg p-8 h-full border shadow-xl hover:shadow-2xl transition-all duration-300`}
               >
                 <div className="flex items-start gap-4 mb-6">
                   <span className="text-5xl">{model.icon}</span>
@@ -244,18 +244,18 @@ export default function CellThreeImplementation() {
 
                 <div className="space-y-4">
                   <div>
-                    <p className="text-xs text-slate-400 uppercase tracking-wide mb-1">Focus</p>
-                    <p className="text-slate-300 font-semibold">{model.focus}</p>
+                    <p className="text-xs text-slate-800 uppercase tracking-wide mb-1">Focus</p>
+                    <p className="text-slate-800 font-semibold">{model.focus}</p>
                   </div>
 
                   <div className="border-t border-white/10 pt-4">
-                    <p className="text-xs text-slate-400 uppercase tracking-wide mb-1">Urgency</p>
+                    <p className="text-xs text-slate-800 uppercase tracking-wide mb-1">Urgency</p>
                     <p className={`${model.textColor} font-bold`}>{model.urgency}</p>
                   </div>
 
                   <div className="border-t border-white/10 pt-4">
-                    <p className="text-xs text-slate-400 uppercase tracking-wide mb-1">Tele-Social Work Role</p>
-                    <p className="text-slate-300">{model.role}</p>
+                    <p className="text-xs text-slate-800 uppercase tracking-wide mb-1">Tele-Social Work Role</p>
+                    <p className="text-slate-800">{model.role}</p>
                   </div>
                 </div>
               </Card>
@@ -266,8 +266,8 @@ export default function CellThreeImplementation() {
 
       {/* Rescue Workflow */}
       <motion.div variants={itemVariants}>
-        <h3 className="text-3xl font-bold text-slate-50 mb-8 text-center">
-          <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+        <h3 className="text-3xl font-bold text-slate-900 mb-8 text-center">
+          <span className="bg-linear-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent">
             6-Step Rescue Workflow
           </span>
         </h3>
@@ -280,21 +280,21 @@ export default function CellThreeImplementation() {
               custom={idx}
               transition={{ delay: idx * 0.1 }}
             >
-              <Card className="bg-gradient-to-r from-slate-900/80 to-slate-900/40 border border-cyan-500/30 backdrop-blur-lg p-6 hover:border-cyan-400/50 transition-all duration-300">
+              <Card className="bg-white border border-gray-200 backdrop-blur-lg p-6 hover:border-cyan-300 transition-all duration-300 shadow-sm">
                 <div className="flex gap-6 items-start">
                   <motion.div
-                    className="flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center font-bold text-white text-xl shadow-lg"
+                    className="shrink-0 w-14 h-14 rounded-xl bg-linear-to-br from-cyan-500 to-blue-600 flex items-center justify-center font-bold text-white text-xl shadow-lg"
                     whileHover={{ scale: 1.1 }}
                   >
                     {step.step}
                   </motion.div>
 
                   <div className="flex-1">
-                    <h4 className="text-lg font-bold text-cyan-300 mb-2">
+                    <h4 className="text-lg font-bold text-cyan-700 mb-2">
                       {step.title}
                     </h4>
-                    <p className="text-slate-300 mb-3">{step.desc}</p>
-                    <div className="flex items-center gap-2 text-emerald-400 text-sm">
+                    <p className="text-slate-600 mb-3">{step.desc}</p>
+                    <div className="flex items-center gap-2 text-emerald-600 text-sm">
                       <span className="inline-block w-1 h-1 bg-emerald-400 rounded-full" />
                       {step.action}
                     </div>
@@ -308,8 +308,8 @@ export default function CellThreeImplementation() {
 
       {/* Communication Architecture */}
       <motion.div variants={itemVariants}>
-        <Card className="bg-gradient-to-br from-slate-900/80 to-slate-900/40 border border-purple-500/40 backdrop-blur-lg p-10">
-          <h3 className="text-2xl font-bold text-purple-300 mb-8">
+        <Card className="bg-white border border-gray-200 backdrop-blur-lg p-10 shadow-sm">
+          <h3 className="text-2xl font-bold text-purple-700 mb-8">
             Communication Architecture
           </h3>
 
@@ -333,8 +333,8 @@ export default function CellThreeImplementation() {
                   viewport={{ once: true }}
                   className="text-center"
                 >
-                  <div className="text-xl mb-2 text-slate-100 ">{item.label}</div>
-                  <p className="text-xs text-slate-100">{item.desc}</p>
+                  <div className="text-xl mb-2 text-slate-900 ">{item.label}</div>
+                  <p className="text-xs text-slate-600">{item.desc}</p>
 
                   {idx < 6 && (
                     <motion.div
@@ -350,7 +350,7 @@ export default function CellThreeImplementation() {
             </div>
 
             {/* Key Features */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 pt-8 border-t border-purple-500/20">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 pt-8 border-t border-gray-200">
               {[
                 {
                   title: "Self-Healing Mesh",
@@ -377,7 +377,7 @@ export default function CellThreeImplementation() {
                   viewport={{ once: true }}
                   className="flex gap-3"
                 >
-                  <span className="text-purple-400 font-bold flex-shrink-0">✓</span>
+                  <span className="text-purple-400 font-bold shrink-0">✓</span>
                   <div>
                     <p className="font-semibold text-purple-300">{feature.title}</p>
                     <p className="text-sm text-slate-400">{feature.desc}</p>
@@ -391,13 +391,13 @@ export default function CellThreeImplementation() {
 
       {/* Operational Map */}
       <motion.div variants={itemVariants}>
-        <h3 className="text-3xl font-bold text-slate-50 mb-8 text-center">
-          <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+        <h3 className="text-3xl font-bold text-slate-900 mb-8 text-center">
+          <span className="bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             Operational Coverage Map
           </span>
         </h3>
-        <div className="relative p-1 rounded-2xl bg-gradient-to-r from-purple-500/40 via-pink-500/40 to-purple-500/40 shadow-2xl">
-          <div className="bg-slate-900/80 backdrop-blur-lg rounded-2xl p-8 overflow-hidden">
+        <div className="relative p-1 rounded-2xl bg-linear-to-r from-purple-500/40 via-pink-500/40 to-purple-500/40 shadow-2xl">
+          <div className="bg-white/80 backdrop-blur-lg rounded-2xl p-8 overflow-hidden">
             <Image
               src="/map.jpeg"
               alt="Operational Coverage Map"
@@ -412,8 +412,8 @@ export default function CellThreeImplementation() {
 
       {/* Training Framework */}
       <motion.div variants={itemVariants}>
-        <h3 className="text-3xl font-bold text-slate-50 mb-8 text-center">
-          <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+        <h3 className="text-3xl font-bold text-slate-900 mb-8 text-center">
+          <span className="bg-linear-to-r from-emerald-700 to-cyan-700 bg-clip-text text-transparent">
             Train-the-Trainer Model
           </span>
         </h3>
@@ -427,7 +427,7 @@ export default function CellThreeImplementation() {
               transition={{ delay: idx * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="bg-gradient-to-br from-emerald-900/30 to-cyan-900/20 border border-emerald-500/40 backdrop-blur-lg p-6 h-full hover:border-emerald-400/60 transition-all duration-300">
+              <Card className="bg-linear-to-br from-white via-emerald-50/70 to-cyan-50/80 border border-emerald-200 backdrop-blur-lg p-6 h-full shadow-sm hover:border-emerald-400 hover:shadow-md transition-all duration-300">
                 <div className="flex items-start gap-4 mb-4">
                   <motion.span
                     className="text-4xl"
@@ -435,18 +435,18 @@ export default function CellThreeImplementation() {
                   >
                     {module.icon}
                   </motion.span>
-                  <h4 className="text-lg font-bold text-emerald-300">
+                  <h4 className="text-lg font-bold text-emerald-700">
                     Module {module.num}
                   </h4>
                 </div>
 
-                <h5 className="font-bold text-slate-50 mb-3">{module.title}</h5>
-                <p className="text-slate-300 text-sm leading-relaxed">
+                <h5 className="font-bold text-slate-900 mb-3">{module.title}</h5>
+                <p className="text-slate-700 text-sm leading-relaxed">
                   {module.content}
                 </p>
 
-                <div className="mt-4 pt-4 border-t border-emerald-500/20">
-                  <p className="text-xs text-slate-400">
+                <div className="mt-4 pt-4 border-t border-emerald-200">
+                  <p className="text-xs text-slate-600">
                     📹 Pre-recorded videos | 🎙️ Live mesh audio | 📱 Offline app
                   </p>
                 </div>
@@ -460,25 +460,25 @@ export default function CellThreeImplementation() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
           viewport={{ once: true }}
-          className="mt-8 p-6 bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border border-emerald-500/30 rounded-xl"
+          className="mt-8 p-6 bg-linear-to-r from-emerald-500/10 to-cyan-500/10 border border-emerald-500/30 rounded-xl"
         >
-          <p className="text-slate-300 text-center">
-            <strong className="text-emerald-300">Delivery Methods:</strong> Pre-recorded videos (offline), live mesh network audio calls (weekly coordination), searchable digital handbook in app, peer-to-peer training via mesh network
+          <p className="text-slate-700 text-center">
+            <strong className="text-emerald-700">Delivery Methods:</strong> Pre-recorded videos (offline), live mesh network audio calls (weekly coordination), searchable digital handbook in app, peer-to-peer training via mesh network
           </p>
         </motion.div>
       </motion.div>
 
       {/* Example Scenario */}
       <motion.div variants={itemVariants}>
-        <Card className="bg-gradient-to-br from-blue-900/30 to-purple-900/30 border border-blue-500/40 backdrop-blur-lg p-10">
-          <h3 className="text-2xl font-bold text-blue-300 mb-6 flex items-center gap-3">
+        <Card className="bg-linear-to-br from-white via-blue-50/70 to-purple-50/70 border border-blue-200 backdrop-blur-lg p-10 shadow-sm">
+          <h3 className="text-2xl font-bold text-blue-800 mb-6 flex items-center gap-3">
             <span>📋</span> Real-World Scenario: WCNSF Child
           </h3>
 
           <div className="space-y-4">
-            <div className="bg-slate-900/50 p-4 rounded-lg border border-blue-500/20">
-              <p className="text-sm text-slate-400 uppercase tracking-wide mb-2">Background</p>
-              <p className="text-slate-300 leading-relaxed">
+            <div className="bg-white/80 p-4 rounded-lg border border-blue-200">
+              <p className="text-sm text-slate-600 uppercase tracking-wide mb-2">Background</p>
+              <p className="text-slate-700 leading-relaxed">
                 A WCNSF child (Wounded Child, No Surviving Family) – 9-year-old, lost entire family in airstrike, leg wound infected and untreated for 5 days, hiding in rubble in North Gaza with only 3 liters of water available daily.
               </p>
             </div>
@@ -501,17 +501,17 @@ export default function CellThreeImplementation() {
                   viewport={{ once: true }}
                   className="flex gap-4 items-start"
                 >
-                  <motion.div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500/30 flex items-center justify-center font-bold text-blue-300 text-sm">
+                  <motion.div className="shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-700 text-sm ring-1 ring-blue-200">
                     {item.step}
                   </motion.div>
-                  <p className="text-slate-300 pt-0.5">{item.action}</p>
+                  <p className="text-slate-700 pt-0.5">{item.action}</p>
                 </motion.div>
               ))}
             </div>
 
-            <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/10 border border-green-500/30 p-4 rounded-lg mt-6">
-              <p className="text-green-300 font-semibold">✓ Outcome:</p>
-              <p className="text-slate-300 text-sm mt-2">
+            <div className="bg-linear-to-r from-green-50 to-emerald-50 border border-green-200 p-4 rounded-lg mt-6">
+              <p className="text-green-700 font-semibold">✓ Outcome:</p>
+              <p className="text-slate-700 text-sm mt-2">
                 Child survives. Receives immediate physical rescue and medical care, then transitions to psychological support in the Rehabilitation phase. All through a decentralized, mesh-networked system that bypasses the 86% physical aid interception rate.
               </p>
             </div>
@@ -521,8 +521,8 @@ export default function CellThreeImplementation() {
 
       {/* Tele-Psychiatry Integration */}
       <motion.div variants={itemVariants}>
-        <Card className="bg-gradient-to-br from-pink-900/30 to-purple-900/30 border border-pink-500/40 backdrop-blur-lg p-10">
-          <h3 className="text-2xl font-bold text-pink-300 mb-6">
+        <Card className="bg-linear-to-br from-white via-pink-50/70 to-purple-50/70 border border-pink-200 backdrop-blur-lg p-10 shadow-sm">
+          <h3 className="text-2xl font-bold text-pink-800 mb-6">
             Tele-Psychiatry Integration (Rehabilitation Phase)
           </h3>
 
@@ -550,17 +550,17 @@ export default function CellThreeImplementation() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
                 viewport={{ once: true }}
-                className="text-center"
+                className="text-center rounded-2xl border border-pink-100 bg-white/75 p-5 shadow-sm"
               >
                 <div className="text-4xl mb-4">{method.icon}</div>
-                <h4 className="font-bold text-pink-300 mb-2">{method.title}</h4>
-                <p className="text-slate-300 text-sm">{method.desc}</p>
+                <h4 className="font-bold text-pink-700 mb-2">{method.title}</h4>
+                <p className="text-slate-700 text-sm">{method.desc}</p>
               </motion.div>
             ))}
           </div>
 
-          <div className="mt-8 pt-8 border-t border-pink-500/20">
-            <p className="text-slate-300 italic text-center">
+          <div className="mt-8 pt-8 border-t border-pink-200">
+            <p className="text-slate-700 italic text-center">
               This ensures <strong>continuity of care AFTER physical survival is secured</strong> – aligning with the 3R model and prioritizing rescue over rehabilitation
             </p>
           </div>
@@ -569,8 +569,8 @@ export default function CellThreeImplementation() {
 
       {/* Key Achievements */}
       <motion.div variants={itemVariants}>
-        <Card className="bg-gradient-to-br from-slate-900/80 to-slate-900/40 border border-white/20 backdrop-blur-lg p-10">
-          <h3 className="text-2xl font-bold text-slate-50 mb-8 text-center">
+        <Card className="bg-linear-to-br from-white via-slate-50 to-purple-50/60 border border-slate-200 backdrop-blur-lg p-10 shadow-sm">
+          <h3 className="text-2xl font-bold text-slate-900 mb-8 text-center">
             Framework Capabilities
           </h3>
 
@@ -615,10 +615,10 @@ export default function CellThreeImplementation() {
                 viewport={{ once: true }}
                 className="flex gap-4"
               >
-                <span className="text-3xl flex-shrink-0">{capability.icon}</span>
+                <span className="text-3xl shrink-0">{capability.icon}</span>
                 <div>
-                  <h4 className="font-bold text-slate-50 mb-1">{capability.title}</h4>
-                  <p className="text-slate-400 text-sm">{capability.desc}</p>
+                  <h4 className="font-bold text-slate-900 mb-1">{capability.title}</h4>
+                  <p className="text-slate-700 text-sm">{capability.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -629,10 +629,10 @@ export default function CellThreeImplementation() {
       {/* Final Statement */}
       <motion.div
         variants={itemVariants}
-        className="text-center p-10 bg-gradient-to-r from-purple-900/40 via-pink-900/40 to-red-900/40 border border-purple-500/30 rounded-2xl backdrop-blur-lg"
+        className="text-center p-10 bg-linear-to-r from-purple-50 via-pink-50 to-red-50 border border-purple-200 rounded-2xl backdrop-blur-lg shadow-sm"
       >
-        <p className="text-lg text-slate-300 leading-relaxed">
-          This <strong className="text-purple-300">Tele-Social Work Framework for Rescue Coordination</strong> makes rescue-phase psychosocial coordination possible in Gaza despite physical access limitations – aligning with humanitarian mandates while maximizing operational efficiency through decentralized, mesh-networked infrastructure.
+        <p className="text-lg text-slate-700 leading-relaxed">
+          This <strong className="text-purple-700">Tele-Social Work Framework for Rescue Coordination</strong> makes rescue-phase psychosocial coordination possible in Gaza despite physical access limitations – aligning with humanitarian mandates while maximizing operational efficiency through decentralized, mesh-networked infrastructure.
         </p>
       </motion.div>
     </motion.div>

@@ -47,13 +47,13 @@ export function DamageAssessmentDashboard() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.25 }}
-      className="rounded-xl border border-slate-800 w-full bg-slate-950/90 p-2 md:p-8 shadow-xl shadow-blue-950/20"
+      className="rounded-xl border border-gray-300 w-full bg-white/90 p-2 md:p-8 shadow-xl shadow-blue-100/20"
     >
-      <div className="mb-6 flex flex-col gap-4 border-b border-slate-800 pb-4 md:flex-row md:items-end md:justify-between">
+        <div className="mb-6 flex flex-col gap-4 border-b border-gray-300 pb-4 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="text-xs uppercase tracking-[0.35em] text-cyan-300/80">Damage Assessment Dashboard</p>
-          <h3 className="mt-2 text-2xl md:text-3xl font-bold text-white">Damage Assessment Overview (2000-2026)</h3>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-400">
+          <p className="text-xs uppercase tracking-[0.35em] text-cyan-600/80">Damage Assessment Dashboard</p>
+          <h3 className="mt-2 text-2xl md:text-3xl font-bold text-slate-900">Damage Assessment Overview (2000-2026)</h3>
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">
             Longitudinal structural loss, displacement, and service collapse extracted from the humanitarian report.
           </p>
         </div>
@@ -84,11 +84,11 @@ export function DamageAssessmentDashboard() {
         <motion.div
           ref={chartRef}
           variants={itemVariants}
-          className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 md:p-5 lg:flex-[1.1]"
+          className="rounded-xl border border-gray-200 bg-white/95 p-4 md:p-5 lg:flex-[1.1]"
         >
           <div className="mb-4 flex items-center justify-between gap-3">
-            <h4 className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-200">Structural damage chart</h4>
-            <span className="text-xs text-slate-400">198,273 affected structures</span>
+            <h4 className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-700">Structural damage chart</h4>
+            <span className="text-xs text-slate-600">198,273 affected structures</span>
           </div>
 
           <ChartContainer
@@ -102,8 +102,8 @@ export function DamageAssessmentDashboard() {
                   <stop offset="100%" stopColor="#0f172a" stopOpacity={0.35} />
                 </linearGradient>
               </defs>
-              <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fill: "#94a3b8", fontSize: 12 }} />
-              <YAxis tickLine={false} axisLine={false} tick={{ fill: "#94a3b8", fontSize: 12 }} />
+              <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fill: "#64748b", fontSize: 12 }} />
+              <YAxis tickLine={false} axisLine={false} tick={{ fill: "#64748b", fontSize: 12 }} />
               <Tooltip content={<DamageBarTooltip />} cursor={false} />
               <Bar
                 dataKey="value"
@@ -124,11 +124,11 @@ export function DamageAssessmentDashboard() {
         <motion.div
           ref={pieRef}
           variants={itemVariants}
-          className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 md:p-5 lg:w-[320px] lg:flex-none"
+          className="rounded-xl border border-gray-200 bg-white/95 p-4 md:p-5 lg:w-[320px] lg:flex-none"
         >
           <div className="mb-4 flex items-center justify-between gap-3">
-            <h4 className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-200">Damage mix</h4>
-            <span className="text-xs text-slate-400">Share of affected stock</span>
+            <h4 className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-700">Damage mix</h4>
+            <span className="text-xs text-slate-600">Share of affected stock</span>
           </div>
 
           <div className="mx-auto h-55 w-full max-w-65">
@@ -152,13 +152,13 @@ export function DamageAssessmentDashboard() {
                 <Tooltip
                   formatter={(value) => (typeof value === "number" ? value.toLocaleString() : value ?? "")}
                   contentStyle={{
-                    backgroundColor: "#020617",
-                    border: "1px solid rgba(30, 41, 59, 1)",
+                    backgroundColor: "#ffffff",
+                    border: "1px solid rgb(226 232 240)",
                     borderRadius: "0.75rem",
-                    color: "#e2e8f0",
+                    color: "#0f172a",
                   }}
-                  labelStyle={{ color: "#94a3b8" }}
-                  itemStyle={{ color: "#e2e8f0" }}
+                  labelStyle={{ color: "#475569" }}
+                  itemStyle={{ color: "#0f172a" }}
                 />
               </PieChart>
             </ResponsiveContainer>
@@ -166,12 +166,12 @@ export function DamageAssessmentDashboard() {
 
           <div className="mt-4 space-y-2">
             {damageChartData.map((item) => (
-              <div key={item.name} className="flex items-center justify-between gap-3 rounded-lg border border-slate-800 bg-slate-950/60 px-3 py-2 text-sm text-slate-300">
+              <div key={item.name} className="flex items-center justify-between gap-3 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-slate-700">
                 <span className="flex items-center gap-2">
                   <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: item.fill }} />
                   {item.name}
                 </span>
-                <span className="font-medium text-white">{item.value.toLocaleString()}</span>
+                <span className="font-medium text-slate-900">{item.value.toLocaleString()}</span>
               </div>
             ))}
           </div>
@@ -179,10 +179,10 @@ export function DamageAssessmentDashboard() {
       </div>
 
       <div className="mt-8 space-y-4">
-        <motion.div variants={itemVariants} className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 md:p-5">
+        <motion.div variants={itemVariants} className="rounded-xl border border-gray-200 bg-white/95 p-4 md:p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
-            <h4 className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-200">Structural damage breakdown</h4>
-            <span className="text-xs text-slate-400">Total: {TOTAL_STRUCTURES.toLocaleString()} structures</span>
+            <h4 className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-700">Structural damage breakdown</h4>
+            <span className="text-xs text-slate-600">Total: {TOTAL_STRUCTURES.toLocaleString()} structures</span>
           </div>
 
           <div className="space-y-3">
@@ -191,11 +191,11 @@ export function DamageAssessmentDashboard() {
 
               return (
                 <div key={item.label}>
-                  <div className="mb-1 flex items-center justify-between text-xs text-slate-300">
+                  <div className="mb-1 flex items-center justify-between text-xs text-slate-700">
                     <span>{item.label}</span>
                     <span>{item.value.toLocaleString()} structures</span>
                   </div>
-                  <div className="h-3 overflow-hidden rounded-full bg-slate-800">
+                  <div className="h-3 overflow-hidden rounded-full bg-slate-200">
                     <motion.div
                       initial={{ width: 0 }}
                       whileInView={{ width: `${percentage}%` }}
@@ -216,10 +216,10 @@ export function DamageAssessmentDashboard() {
               key={block.title}
               variants={itemVariants}
               whileHover={{ y: -2 }}
-              className="flex-1 rounded-xl border border-slate-800 bg-slate-900/70 p-4 md:p-5"
+              className="flex-1 rounded-xl border border-gray-200 bg-white/95 p-4 md:p-5"
             >
-              <div className="mb-3 text-sm font-semibold uppercase tracking-[0.24em] text-cyan-300">{block.title}</div>
-              <ul className="space-y-2 text-sm text-slate-300">
+              <div className="mb-3 text-sm font-semibold uppercase tracking-[0.24em] text-cyan-700">{block.title}</div>
+              <ul className="space-y-2 text-sm text-slate-700">
                 {block.stats.map((stat) => (
                   <li key={stat} className="flex items-start gap-2">
                     <span className="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400" />

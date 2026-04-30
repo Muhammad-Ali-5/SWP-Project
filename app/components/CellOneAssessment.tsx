@@ -8,8 +8,8 @@ export default function CellOneAssessment() {
   return (
     <div className="w-full md:max-w-7xl mx-auto">
       <div className="mb-12 border-l-4 border-blue-500 pl-6">
-        <h2 className="text-3xl font-bold text-slate-100 uppercase tracking-wider">Phase 1: Factual Baseline</h2>
-        <p className="text-slate-400 mt-2">Damage Assessment & Human Rights Legal Audit</p>
+        <h2 className="text-3xl font-bold text-slate-900 uppercase tracking-wider">Phase 1: Factual Baseline</h2>
+        <p className="mt-2 text-slate-600">Damage Assessment & Human Rights Legal Audit</p>
       </div>
 
       <div className="space-y-8 w-full">
