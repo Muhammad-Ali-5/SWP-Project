@@ -437,63 +437,13 @@ export default function CellTwoLogistics() {
             </CardContent>
           </Card>
 
-          {/* Allocation Donut Chart */}
-          <Card className="lg:col-span-1 bg-slate-900/40 border border-slate-800 backdrop-blur-md p-2">
-            <CardHeader className="mb-0 pb-2 pt-4 px-4">
-              <CardTitle className="text-slate-200 text-sm font-mono tracking-widest uppercase">
-                2_Allocation_Pipeline
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="h-[270px] w-full relative pb-3 pt-0">
-              <motion.div className="w-full h-full" onViewportEnter={() => setChartsInView(true)} viewport={{ once: true, margin: "-50px" }}>
-                {chartsInView && (
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                  <TypedPie
-                    activeIndex={activeIndex}
-                    activeShape={renderActiveShape}
-                    data={allocationData}
-                    cx="50%"
-                    cy="45%"
-                    innerRadius={55}
-                    outerRadius={85}
-                    paddingAngle={4}
-                    dataKey="value"
-                    stroke="none"
-                    onMouseEnter={onPieEnter}
-                    isAnimationActive={true}
-                    animationDuration={1500}
-                    className="cursor-crosshair outline-none"
-                  >
-                    {allocationData.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                      />
-                    ))}
-                  </TypedPie>
-                  <Tooltip content={<PieTooltip />} />
-                  <Legend
-                    verticalAlign="bottom"
-                    height={25}
-                    wrapperStyle={{
-                      fontSize: "11px",
-                      fontFamily: "monospace",
-                      color: "#cbd5e1",
-                    }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-                )}
-              </motion.div>
-            </CardContent>
-          </Card>
+
 
           {/* Acquiring Tech Strategy */}
           <Card className="lg:col-span-1 bg-slate-900/40 border border-slate-800 backdrop-blur-md overflow-hidden p-2">
             <CardHeader className="mb-0 pb-3 pt-4 px-4">
               <CardTitle className="text-slate-200 text-sm font-mono tracking-widest uppercase">
-                3_Acquiring_Tech
+                2_Acquiring_Tech
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3 px-4 pb-4">
@@ -541,6 +491,57 @@ export default function CellTwoLogistics() {
                   ground workers directly.
                 </p>
               </div>
+            </CardContent>
+          </Card>
+                    {/* Allocation Donut Chart */}
+          <Card className="lg:col-span-1 bg-slate-900/40 border border-slate-800 backdrop-blur-md p-2">
+            <CardHeader className="mb-0 pb-2 pt-4 px-4">
+              <CardTitle className="text-slate-200 text-sm font-mono tracking-widest uppercase">
+                3_Allocation_Pipeline
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="h-[270px] w-full relative pb-3 pt-0">
+              <motion.div className="w-full h-full" onViewportEnter={() => setChartsInView(true)} viewport={{ once: true, margin: "-50px" }}>
+                {chartsInView && (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                  <TypedPie
+                    activeIndex={activeIndex}
+                    activeShape={renderActiveShape}
+                    data={allocationData}
+                    cx="50%"
+                    cy="45%"
+                    innerRadius={55}
+                    outerRadius={85}
+                    paddingAngle={4}
+                    dataKey="value"
+                    stroke="none"
+                    onMouseEnter={onPieEnter}
+                    isAnimationActive={true}
+                    animationDuration={1500}
+                    className="cursor-crosshair outline-none"
+                  >
+                    {allocationData.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
+                    ))}
+                  </TypedPie>
+                  <Tooltip content={<PieTooltip />} />
+                  <Legend
+                    verticalAlign="bottom"
+                    height={25}
+                    wrapperStyle={{
+                      fontSize: "11px",
+                      fontFamily: "monospace",
+                      color: "#cbd5e1",
+                    }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+                )}
+              </motion.div>
             </CardContent>
           </Card>
         </div>
