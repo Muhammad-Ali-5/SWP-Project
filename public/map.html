@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pakistan → Gaza: Aid Logistics Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@300;400;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #f5f4f0;
+            --panel: #ffffff;
+            --border: #d4cfc4;
+            --accent: #1a6fa8;
+            --green: #1a8a4a;
+            --orange: #c8680a;
+            --red: #c0392b;
+            --yellow: #b8860b;
+            --text: #0d0303;
+            --muted: #302c26;
+            --mono: 'Share Tech Mono', monospace;
+            --sans: 'Barlow', sans-serif;
+            font-weight: bold;
+        }
+
+        * {
+            font-weight: bold;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-weight: bold;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* ── HEADER ── */
+        header {
+            font-weight: bold;
+            background: var(--panel);
+            border-bottom: 1px solid var(--border);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            z-index: 1000;
+        }
+
+        .header-left {
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-title {
+            font-weight: bold;
+            font-family: var(--mono);
+            font-size: 1rem;
+            color: var(--accent);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        header {
+            font-weight: bold;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        .header-sub {
+            font-weight: bold;
+            font-size: 0.72rem;
+            color: var(--muted);
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .header-badge {
+            font-weight: bold;
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            background: rgba(26, 111, 168, 0.08);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 3px 10px;
+            border-radius: 3px;
+            letter-spacing: 1px;
+        }
+
+        /* ── CONTROLS ── */
+        .controls {
+            font-weight: bold;
+            background: var(--panel);
+            border-bottom: 1px solid var(--border);
+            padding: 8px 20px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+
+        .ctrl-label {
+            font-weight: bold;
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            color: var(--muted);
+            letter-spacing: 1px;
+            margin-right: 4px;
+        }
+
+        .btn {
+            font-weight: bold;
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            padding: 5px 14px;
+            border-radius: 3px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            font-weight: bold;
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(26, 111, 168, 0.06);
+        }
+
+        .btn.active {
+            font-weight: bold;
+            background: rgba(26, 111, 168, 0.1);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn.jordan-btn.active {
+            font-weight: bold;
+            background: rgba(200, 104, 10, 0.1);
+            border-color: var(--orange);
+            color: var(--orange);
+        }
+
+        .btn.planb-btn.active {
+            font-weight: bold;
+            background: rgba(26, 138, 74, 0.1);
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .divider {
+            font-weight: bold;
+            width: 1px;
+            height: 22px;
+            background: var(--border);
+            margin: 0 4px;
+        }
+
+        /* ── MAIN LAYOUT ── */
+        .main {
+            font-weight: bold;
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ── MAP ── */
+        #map {
+            font-weight: bold;
+            flex: 1;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* ── PLAN B OVERLAY ── */
+        #planb-view {
+            font-weight: bold;
+            display: none;
+            flex: 1;
+            height: 100%;
+            background: #f5f4f0;
+            overflow-y: auto;
+            padding: 30px;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        #planb-view.visible {
+            font-weight: bold;
+            display: flex;
+        }
+
+        .planb-container {
+            font-weight: bold;
+            width: 100%;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .planb-title {
+            font-weight: bold;
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            color: var(--green);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .planb-desc {
+            font-weight: bold;
+            font-size: 0.82rem;
+            color: var(--muted);
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+
+        /* flowchart nodes */
+        .flow-row {
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 0;
+        }
+
+        .flow-node {
+            font-weight: bold;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 14px 18px;
+            width: 200px;
+            text-align: center;
+            position: relative;
+            transition: border-color 0.2s;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        .flow-node:hover {
+            font-weight: bold;
+            border-color: var(--green);
+            box-shadow: 0 2px 8px rgba(26,138,74,0.12);
+        }
+
+        .flow-node .fn-icon {
+            font-weight: bold;
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+        }
+
+        .flow-node .fn-title {
+            font-weight: bold;
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            color: var(--green);
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .flow-node .fn-sub {
+            font-weight: bold;
+            font-size: 0.68rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .flow-node .fn-tag {
+            font-weight: bold;
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            padding: 2px 7px;
+            border-radius: 20px;
+            margin-top: 6px;
+        }
+
+        .fn-tier {
+            font-weight: bold;
+            font-family: var(--mono);
+            font-size: 0.58rem;
+            color: var(--muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            opacity: 0.7;
+        }
+
+        .tag-secure {
+            font-weight: bold;
+            background: rgba(26, 138, 74, 0.1);
+            color: #1a8a4a;
+            border: 1px solid #1a8a4a;
+        }
+
+        .tag-instant {
+            font-weight: bold;
+            background: rgba(26, 111, 168, 0.1);
+            color: #1a6fa8;
+            border: 1px solid #1a6fa8;
+        }
+
+        .tag-local {
+            font-weight: bold;
+            background: rgba(200, 104, 10, 0.1);
+            color: #c8680a;
+            border: 1px solid #c8680a;
+        }
+
+        .flow-arrow {
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--green);
+            font-size: 1.2rem;
+            padding: 6px 0;
+            line-height: 1;
+        }
+
+        .flow-arrow .fa-label {
+            font-weight: bold;
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            color: var(--muted);
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .flow-col {
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .flow-why {
+            font-weight: bold;
+            background: rgba(192, 57, 43, 0.05);
+            border: 1px solid rgba(192, 57, 43, 0.25);
+            border-radius: 6px;
+            padding: 14px 18px;
+            margin: 20px 0 28px;
+            font-size: 0.78rem;
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .flow-why strong {
+            font-weight: bold;
+            color: var(--red);
+            font-family: var(--mono);
+        }
+
+        .flow-stats-row {
+            font-weight: bold;
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .flow-stat {
+            font-weight: bold;
+            flex: 1;
+            min-width: 130px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 12px 14px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .flow-stat .fs-num {
+            font-weight: bold;
+            font-family: var(--mono);
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+
+        .flow-stat .fs-label {
+            font-weight: bold;
+            font-size: 0.65rem;
+            color: var(--muted);
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        /* ── SIDE LEGEND ── */
+        .legend {
+            font-weight: bold;
+            position: absolute;
+            bottom: 20px;
+            left: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 12px 16px;
+            z-index: 500;
+            font-size: 0.72rem;
+            min-width: 220px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+        }
+
+        .legend-title {
+            font-weight: bold;
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            color: var(--muted);
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .legend-item {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 5px;
+            color: var(--text);
+        }
+
+        .legend-line {
+            font-weight: bold;
+            width: 24px;
+            height: 3px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .ll-main {
+            font-weight: bold;
+            background: #1a6fa8;
+        }
+
+        .ll-jordan {
+            font-weight: bold;
+            background: #c8680a;
+        }
+
+        .ll-sea {
+            font-weight: bold;
+            background: #6e4fa8;
+        }
+
+        .ll-ground {
+            font-weight: bold;
+            background: #b8860b;
+        }
+
+        .ll-blocked {
+            font-weight: bold;
+            background: #c0392b;
+        }
+
+        .ll-cleared {
+            font-weight: bold;
+            background: #1a8a4a;
+        }
+
+        .ll-philadelphi {
+            font-weight: bold;
+            background: #8e44ad;
+            border: 1px dashed #8e44ad;
+        }
+
+        /* ── LEAFLET POPUP CUSTOM ── */
+        .leaflet-popup-content-wrapper {
+            font-weight: bold;
+            background: #ffffff !important;
+            border: 1px solid #d4cfc4 !important;
+            border-radius: 8px !important;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12) !important;
+            color: #2c2c2c !important;
+            font-family: 'Barlow', sans-serif !important;
+            min-width: 240px;
+            max-width: 300px;
+        }
+
+        .leaflet-popup-tip {
+            font-weight: bold;
+            background: #ffffff !important;
+        }
+
+        .leaflet-popup-close-button {
+            font-weight: bold;
+            color: #7a7060 !important;
+            font-size: 16px !important;
+        }
+
+        .pop-header {
+            font-weight: bold;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #1a6fa8;
+            margin-bottom: 6px;
+            border-bottom: 1px solid #d4cfc4;
+            padding-bottom: 6px;
+        }
+
+        .pop-title {
+            font-weight: bold;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .pop-body {
+            font-weight: bold;
+            font-size: 0.78rem;
+            color: #302c25;
+            line-height: 1.65;
+            margin-bottom: 8px;
+        }
+
+        .pop-tag {
+            font-weight: bold;
+            display: inline-block;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.62rem;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin: 2px 2px 0 0;
+        }
+
+        .pop-delay {
+            font-weight: bold;
+            background: rgba(192, 57, 43, 0.08);
+            color: #c0392b;
+            border: 1px solid rgba(192, 57, 43, 0.3);
+        }
+
+        .pop-info {
+            font-weight: bold;
+            background: rgba(26, 111, 168, 0.08);
+            color: #1a6fa8;
+            border: 1px solid rgba(26, 111, 168, 0.25);
+        }
+
+        .pop-warn {
+            font-weight: bold;
+            background: rgba(200, 104, 10, 0.08);
+            color: #c8680a;
+            border: 1px solid rgba(200, 104, 10, 0.3);
+        }
+
+        .pop-ok {
+            font-weight: bold;
+            background: rgba(26, 138, 74, 0.08);
+            color: #1a8a4a;
+            border: 1px solid rgba(26, 138, 74, 0.25);
+        }
+
+        .pop-stat {
+            font-weight: bold;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+            color: #b8860b;
+            margin: 6px 0 2px;
+        }
+
+        .pop-source {
+            font-weight: bold;
+            font-size: 0.62rem;
+            color: #9a9080;
+            margin-top: 8px;
+            border-top: 1px solid #e4dfd4;
+            padding-top: 5px;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-left">
+            <div class="header-title">// Cell 2 — Logistics Route Tracker</div>
+            <div class="header-sub">Pakistan → Gaza Strip · Humanitarian Aid Supply Chain · SWP Assessment 2025–26</div>
+        </div>
+        <div class="header-badge">NDMA / AKF DATA</div>
+    </header>
+
+    <div class="controls">
+        <span class="ctrl-label">VIEW MODE //</span>
+        <button class="btn active" id="btn-main" onclick="showRoute('main')">▶ Main Route (Egypt)</button>
+        <button class="btn jordan-btn" id="btn-jordan" onclick="showRoute('jordan')">⇢ Alt Route (Jordan)</button>
+        <div class="divider"></div>
+        <span class="ctrl-label">CONTINGENCY //</span>
+        <button class="btn planb-btn" id="btn-planb" onclick="showRoute('planb')"> Plan B — Digital Transfer</button>
+    </div>
+
+    <div class="main">
+        <div id="map"></div>
+
+        <!-- ══════════════════════════════════════════
+       PLAN B VIEW
+  ══════════════════════════════════════════ -->
+        <div id="planb-view">
+            <div class="planb-container">
+                <div class="planb-title">// Plan B — Digital Financial Pipeline</div>
+                <div class="planb-desc">
+                    When physical borders are closed or aid trucks are intercepted, this contingency routes
+                    <strong>liquid capital</strong> directly to verified local workers inside Gaza —
+                    bypassing all physical checkpoints entirely.
+                    <br><em style="color:#9a9080">Source: Chapter 4, §4.7 — Plan B Digital Financial Contingency</em>
+                </div>
+
+                <div class="flow-why">
+                    <strong>WHY PLAN B EXISTS:</strong> UN OCHA (Oct 2025) documented that approximately
+                    <strong style="color:#c0392b">~80% of all humanitarian cargo</strong> collected inside Gaza
+                    faced interception or looting during last-mile distribution (May–Oct 2025).
+                    During the peak window of May 19–Aug 5, 2025, this figure rose to
+                    <strong style="color:#c0392b">over 95%</strong>.
+                    Physical supply chains alone cannot achieve last-mile delivery.
+                    <br><span style="color:#9a9080;font-size:0.7rem">Source: UN OCHA, Humanitarian Situation Update #336
+                        (Oct 2025); Gaza Humanitarian Response Update (Aug 2025) — Chapter 4, §4.3.6 &amp; §4.7</span>
+                </div>
+
+                <div class="flow-col">
+
+                    <!-- TIER 1 -->
+                    <div class="flow-row">
+                        <div class="flow-node">
+                            <div class="fn-tier">// TIER 1</div>
+                            <div class="fn-icon">🇵🇰</div>
+                            <div class="fn-title">DONOR IN PAKISTAN</div>
+                            <div class="fn-sub">Individual, NGO (AKF, Saylani, Baitussalam), or Corporate CSR donor
+                                initiates transfer</div>
+                            <div class="fn-tag tag-secure">ORIGIN</div>
+                        </div>
+                    </div>
+
+                    <div class="flow-arrow">
+                        <div>↓</div>
+                        <div class="fa-label">ENCRYPTED TRANSFER</div>
+                    </div>
+
+                    <div class="flow-row">
+                        <div class="flow-node">
+                            <div class="fn-tier">// TIER 1 — DECENTRALISED GATEWAY</div>
+                            <div class="fn-title">STABLECOIN GATEWAY</div>
+                            <div class="fn-sub">USDC / USDT via low-fee blockchain network — bypasses SWIFT banking
+                                delays and geopolitical account-freezing mechanisms entirely</div>
+                            <div class="fn-tag tag-instant">INSTANT · BORDERLESS</div>
+                        </div>
+                    </div>
+
+                    <div class="flow-arrow">
+                        <div>↓</div>
+                        <div class="fa-label">VERIFIED WALLET — TIER 2</div>
+                    </div>
+
+                    <!-- TIER 2: Two channels side by side -->
+                    <div class="flow-row" style="gap: 12px; align-items: flex-start;">
+
+                        <!-- Channel A: Turkish NGO -->
+                        <div class="flow-col" style="align-items: center;">
+                            <div class="flow-node" style="width:200px;">
+                                <div class="fn-tier">// TIER 2 — CHANNEL A</div>
+                                <div class="fn-icon">🇹🇷</div>
+                                <div class="fn-title">TURKISH NGO PARTNER</div>
+                                <div class="fn-sub">Saylani &amp; Baitussalam route funds through Turkish NGO partners
+                                    operating inside Gaza. Saylani: 6,500 hot meals/day in Khan Younis. Baitussalam:
+                                    mechanical bread production plants &amp; orphan care.</div>
+                                <div class="fn-tag tag-local">ACTIVE PARTNER</div>
+                            </div>
+                            <div class="flow-arrow">
+                                <div>↓</div>
+                                <div class="fa-label">GROUND OPS</div>
+                            </div>
+                            <div class="flow-node" style="width:200px;">
+                                <div class="fn-title">BREAD &amp; MEALS DELIVERY</div>
+                                <div class="fn-sub">6,500 hot meals/day in Khan Younis displacement camps (Saylani) +
+                                    mechanical bread plants funded by Baitussalam — all via Turkish partners</div>
+                                <div class="fn-tag tag-local">DAILY DELIVERY</div>
+                            </div>
+                        </div>
+
+                        <div style="color:#1e3a5f; font-size:1.6rem; align-self:center; padding-top:10px;">|</div>
+
+                        <!-- Channel B: Local worker -->
+                        <div class="flow-col" style="align-items: center;">
+                            <div class="flow-node" style="width:200px;">
+                                <div class="fn-tier">// TIER 2 — CHANNEL B</div>
+                                <div class="fn-title">LOCAL GROUND WORKER</div>
+                                <div class="fn-sub">Verified social worker already inside Gaza receives capital in
+                                    digital wallet</div>
+                                <div class="fn-tag tag-secure">VERIFIED</div>
+                            </div>
+                            <div class="flow-arrow">
+                                <div>↓</div>
+                                <div class="fa-label">LOCAL PURCHASE</div>
+                            </div>
+                            <div class="flow-node" style="width:200px;">
+                                <div class="fn-title">LOCAL MARKET BUY</div>
+                                <div class="fn-sub">Worker purchases psychosocial and medical supplies directly from
+                                    internal local informal markets — no border crossing required whatsoever</div>
+                                <div class="fn-tag tag-instant">NO BORDER NEEDED</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flow-arrow">
+                        <div>↓</div>
+                        <div class="fa-label">TRANSPARENT LOG — TIER 3</div>
+                    </div>
+
+                    <!-- TIER 3 -->
+                    <div class="flow-row">
+                        <div class="flow-node" style="width: 320px;">
+                            <div class="fn-tier">// TIER 3 — PUBLIC LEDGER</div>
+                            <div class="fn-title">PUBLIC TRANSPARENCY LEDGER</div>
+                            <div class="fn-sub">Every transaction logged publicly on the blockchain. Donors can trace
+                                capital from origin wallet to ground worker wallet — eliminating the "communication gap"
+                                that reduces donor trust in traditional humanitarian pipelines</div>
+                            <div class="fn-tag tag-secure">ZERO COMMUNICATION GAP</div>
+                        </div>
+                    </div>
+
+                </div><!-- end flow-col -->
+
+                <div class="flow-stats-row">
+                    <div class="flow-stat">
+                        <div class="fs-num">$40K</div>
+                        <div class="fs-label">Baitussalam transfer to UNRWA — funded 2,200+ food-insecure
+                            refugees<br><em style="color:#9a9080">Source: UN OCHA FTS; UNRWA — Chapter 4, §4.6</em>
+                        </div>
+                    </div>
+                    <div class="flow-stat">
+                        <div class="fs-num">6,500</div>
+                        <div class="fs-label">Hot meals/day via Saylani's Turkish partner network in Khan Younis
+                            displacement camps<br><em style="color:#9a9080">Source: Business Recorder (2026) — Chapter
+                                4, §4.6</em></div>
+                    </div>
+                    <div class="flow-stat">
+                        <div class="fs-num">PKR 60M</div>
+                        <div class="fs-label">Saylani Welfare Trust sea consignment value — dispatched via maritime
+                            route<br><em style="color:#9a9080">Source: Business Recorder (2026) — Chapter 4, §4.6</em>
+                        </div>
+                    </div>
+                    <div class="flow-stat">
+                        <div class="fs-num">750</div>
+                        <div class="fs-label">Orphaned children receiving $50/month direct digital stipends (AKF)<br><em
+                                style="color:#9a9080">Source: Alkhidmat Foundation (2026) — Chapter 4, §4.7</em></div>
+                    </div>
+                    <div class="flow-stat">
+                        <div class="fs-num">PKR 9.5B</div>
+                        <div class="fs-label">AKF total emergency relief expenditure for Gaza<br><em
+                                style="color:#9a9080">Source: Alkhidmat Foundation Pakistan (2026) — Chapter 4, §4.7 and
+                                §4.8</em></div>
+                    </div>
+                    <div class="flow-stat">
+                        <div class="fs-num">6,524 MT</div>
+                        <div class="fs-label">Total aid dispatched by AKF (34 air flights, 4 cargo ships, 73
+                            trucks)<br><em style="color:#9a9080">Source: Alkhidmat Foundation Pakistan (2026) — Chapter
+                                4, §4.7</em></div>
+                    </div>
+                    <div class="flow-stat">
+                        <div class="fs-num">~80%</div>
+                        <div class="fs-label">Overall last-mile interception rate (May–Oct 2025). Peak window (May
+                            19–Aug 5, 2025): over 95%<br><em style="color:#9a9080">Source: UN OCHA #336 (Oct 2025); OCHA
+                                Aug 2025 — Chapter 4, §4.3.6</em></div>
+                    </div>
+                </div>
+
+            </div>
+        </div><!-- end planb-view -->
+
+        <!-- Legend (only shown on map views) -->
+        <div class="legend" id="map-legend">
+            <div class="legend-title">Route Key</div>
+            <div class="legend-item">
+                <div class="legend-line ll-main"></div> Air Route (Pakistan → Egypt)
+            </div>
+            <div class="legend-item" id="legend-jordan" style="display:none;">
+                <div class="legend-line ll-jordan"></div> Alt Route (Jordan / Amman)
+            </div>
+            <div class="legend-item">
+                <div class="legend-line ll-sea"></div> Sea Route (Karachi → Port Said / Aqaba)
+            </div>
+            <div class="legend-item">
+                <div class="legend-line ll-ground"></div> Ground Transport (Egypt → Border)
+            </div>
+            <div class="legend-item">
+                <div class="legend-line ll-blocked"></div> Blocked / Critical Bottleneck
+            </div>
+            <div class="legend-item">
+                <div class="legend-line ll-cleared"></div> Cleared → Gaza Entry
+            </div>
+            <div class="legend-item" id="legend-philadelphi" style="display:none;">
+                <div class="legend-line ll-philadelphi"></div> Philadelphi Corridor (Occupied)
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // ── MAP INIT ──
+        const map = L.map('map', {
+            center: [25, 55],
+            zoom: 4,
+            zoomControl: true,
+            attributionControl: false
+        });
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            maxZoom: 19
+        }).addTo(map);
+
+        // ── COORDINATES ──
+        const coords = {
+            lahore: [31.5204, 74.3587],
+            karachi: [24.8607, 67.0011],
+            islamabad: [33.6844, 73.0479],
+            amman: [31.9454, 35.9284],
+            elArish: [31.1302, 33.7984],
+            rafah: [31.2939, 34.2608],
+            keremShalom: [31.2212422, 34.270061],
+            gazaCity: [31.5017, 34.4668],
+            portSaid: [31.2565, 32.2841],
+            aqaba: [29.5267, 35.0060],
+            ashdod: [31.8167, 34.6500],
+            zikim: [31.5980, 34.5270],
+        };
+
+        // ── SEA LANE: Karachi → Port Said ──
+        const seaLaneKarachiToPortSaid = [
+            [24.8607, 67.0011],
+            [23.5000, 63.0000],
+            [19.429809, 59.670163],
+            [15.902443, 54.810136],
+            [11.5000, 44.0000],
+            [12.5000, 43.5000],
+            [14.0000, 42.5000],
+            [18.0000, 39.5000],
+            [22.5000, 37.0000],
+            [27.5000, 34.0000],
+            [28.126229, 33.503208],
+            [28.691795, 32.989329],
+            [29.9000, 32.5500],
+            [29.921462, 32.540392],
+            [29.937526, 32.569195],
+            [29.949710, 32.580490],
+            [29.970433, 32.586994],
+            [29.991606, 32.584582],
+            [30.052736, 32.572937],
+            [30.204460, 32.566163],
+            [30.257767, 32.513494],
+            [30.300927, 32.378188],
+            [30.5382331, 32.3270697],
+            [30.7000, 32.3400],
+            [31.236087, 32.303729],
+            [31.252990, 32.307597],
+            [31.255766, 32.300697],
+            [31.2565, 32.2841]
+        ];
+
+        const philadelphiCorridor = [
+            [31.216774, 34.265206],
+            [31.218585, 34.269442],
+            [31.298505, 34.241406],
+            [31.299112, 34.237235],
+            [31.326168, 34.219752],
+            [31.324008, 34.215503],
+            [31.294096, 34.232907],
+            [31.293207, 34.237737],
+            [31.216774, 34.265206]
+        ];
+
+        // Sea lane Karachi → Aqaba (9th consignment)
+        const seaLaneKarachiToAqaba = [
+            [24.8607, 67.0011],
+            [23.5000, 63.0000],
+            [19.429809, 59.670163],
+            [15.902443, 54.810136],
+            [11.5000, 44.0000],
+            [12.5000, 43.5000],
+            [14.0000, 42.5000],
+            [18.0000, 39.5000],
+            [22.5000, 37.0000],
+            [26.0000, 36.2000],
+            [27.5000, 34.8000],
+            [28.4000, 34.5000],
+            [29.5267, 35.0060]
+        ];
+
+        const truckLanePortSaidToAlArish = [
+            [31.2565, 32.2841],
+            [31.249940, 32.290496],
+            [31.229975, 32.292947],
+            [31.221317, 32.299638],
+            [31.204973, 32.300134],
+            [31.093298, 32.303883],
+            [31.093987, 32.334271],
+            [30.888425, 32.358936],
+            [31.1302, 33.7984]
+        ];
+
+        const roadElArishToRafah = [
+            [31.1302, 33.7984],
+            [31.1350, 33.8200],
+            [31.1700, 33.9500],
+            [31.2100, 34.0800],
+            [31.2400, 34.1800],
+            [31.2939, 34.2608],
+        ];
+
+        const roadKeremToGaza = [
+            [31.2212422, 34.270061],
+            [31.2500, 34.2900],
+            [31.3400, 34.3000],
+            [31.4200, 34.3500],
+            [31.5017, 34.4668],
+        ];
+
+        const roadAmmanToKerem = [
+            [31.9454, 35.9284],
+            [31.7158235, 35.7572003],
+            [31.1868353, 35.6125224],
+            [30.3206623, 35.4625554],
+            [29.5267, 35.0060],
+            [29.9000, 35.0200],
+            [30.6000, 35.0800],
+            [31.0500, 34.7000],
+            [31.2167, 34.2667],
+        ];
+
+        const roadAshdodToZikim = [
+            [31.8167, 34.6500],
+            [31.7200, 34.5800],
+            [31.5980, 34.5270],
+        ];
+
+        // ── CUSTOM MARKER ICONS ──
+        function makeIcon(label, color = '#1a6fa8') {
+            return L.divIcon({
+                className: '',
+                html: `<div style="
+      background: #ffffff;
+      border: 2px solid ${color};
+      border-radius: 6px;
+      padding: 4px 7px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      font-family: 'Share Tech Mono', monospace;
+      color: ${color};
+      font-size: 0.68rem;
+      letter-spacing: 1px;
+    ">${label}</div>`,
+                iconAnchor: [0, 15]
+            });
+        }
+
+        // ── POPUP CONTENT ──
+        const popups = {
+
+            lahore: `
+    <div class="pop-header">// ORIGIN NODE 01</div>
+    <div class="pop-title">Allama Iqbal Int'l Airport — Lahore</div>
+    <div class="pop-body">Primary dispatch hub for NDMA chartered flights. Most consignments from the 19th onward depart from here. Standard payload: 100 metric tons per chartered flight, optimised for El Arish landing weight capacity.</div>
+    <div class="pop-body">Documented departures include consignments 19, 21, 22, 23, 24, 25, 28, 29 (Aug 2025 – Feb 2026), each 100 tons.</div>
+    <span class="pop-tag pop-ok">PRIMARY HUB (19th onward)</span>
+    <span class="pop-tag pop-info">100 TONS / FLIGHT</span>
+    <div class="pop-source">Source: NDMA official releases — Chapter 4, §4.3.1</div>
+  `,
+
+            karachi: `
+    <div class="pop-header">// ORIGIN NODE 02</div>
+    <div class="pop-title">Jinnah Int'l Airport + SAPT Seaport — Karachi</div>
+    <div class="pop-body">Secondary aviation dispatch hub (e.g., 14th consignment: 100 tons to El Arish; 16th: 97 tons to Amman). Also the exclusive origin for all maritime operations via the adjacent SAPT seaport.</div>
+    <div class="pop-body">7th consignment: 300 tons via SAPT to Port Said. 8th: 350 tons to Port Said. 9th: 300 tons to Aqaba, Jordan.</div>
+    <span class="pop-tag pop-ok">AVIATION + SEA</span>
+    <span class="pop-tag pop-info">SAPT SEAPORT ORIGIN</span>
+    <div class="pop-source">Source: NDMA — Chapter 4, §4.3.1 &amp; §4.4</div>
+  `,
+
+            islamabad: `
+    <div class="pop-header">// ORIGIN NODE 03</div>
+    <div class="pop-title">Islamabad Int'l Airport</div>
+    <div class="pop-body">Origin for the 1st through 6th consignments via PAF C-130 military aircraft — cumulative <strong style="color:#b8860b">330 metric tons</strong> (Oct 2023 – early 2024). Also used for the 13th consignment (100 tons, Oct 2024), 17th (100 tons, Aug 3 2025), and 18th (100 tons, Aug 8 2025).</div>
+    <span class="pop-tag pop-ok">EARLY PHASE + LATER CHARTERS</span>
+    <span class="pop-tag pop-info">PAF C-130 MILITARY (1–6)</span>
+    <div class="pop-source">Source: NDMA — Chapter 4, §4.3.1</div>
+  `,
+
+            portSaid: `
+  <div class="pop-header">// SEA ROUTE NODE — ROUTE B</div>
+  <div class="pop-title">Port Said, Egypt</div>
+  <div class="pop-body">Arrival point for Pakistan's 7th consignment (300 tons, early 2024) and 8th consignment (350 tons, Apr 21 2024) via commercial cargo ship from SAPT Karachi. Cargo included medicines, blankets, hygiene kits, tinned food, Female Dignity kits, dry ration, ready-to-eat food, jerry cans, and tents.</div>
+  <div class="pop-body">Sea lane followed: Karachi → Arabian Sea → Salalah (Oman coast) → Bab el-Mandeb Strait (Djibouti / Yemen) → Red Sea (Sudan/Eritrea west · Saudi Arabia east) → Gulf of Suez → Suez Canal → Port Said.</div>
+  <div class="pop-body">From Port Said, cargo moved overland southwest along the Egyptian Mediterranean coastal road (Road 45) to El Arish — approximately 45–50 km — joining the Route A ground transport chain.</div>
+  <div class="pop-stat">650 TONS · 7th + 8th CONSIGNMENTS</div>
+  <span class="pop-tag pop-info">MARITIME — SUEZ CANAL ROUTE</span>
+  <span class="pop-tag pop-ok">SAPT KARACHI ORIGIN</span>
+  <span class="pop-tag pop-warn">ROAD 45 → EL ARISH ONWARD</span>
+  <div class="pop-source">Source: NDMA (2024); NDMA (Apr 2024) — Chapter 4, §4.4</div>
+`,
+
+            aqaba: `
+  <div class="pop-header">// SEA ROUTE NODE — ROUTE B (VARIANT)</div>
+  <div class="pop-title">Aqaba Port, Jordan</div>
+  <div class="pop-body">Destination for Pakistan's 9th consignment — 300 metric tons dispatched from Karachi Port on June 14, 2024, comprising medicines, hygiene kits, and food packs, for onward distribution to Gaza.</div>
+  <div class="pop-stat">300 TONS · 9th CONSIGNMENT · Jun 14 2024</div>
+  <span class="pop-tag pop-info">MARITIME — ROUTE B VARIANT</span>
+  <span class="pop-tag pop-ok">KARACHI PORT ORIGIN</span>
+  <div class="pop-source">Source: Express Tribune (Jun 2024) — Chapter 4, §4.4</div>
+`,
+
+            ashdod: `
+    <div class="pop-header">// ASHDOD PORT — ZIKIM SUPPLY ORIGIN</div>
+    <div class="pop-title">Ashdod Port, Israel</div>
+    <div class="pop-body">International maritime cargo for North Gaza is offloaded here and reloaded onto trucks for the final leg to Zikim (Erez West) crossing — approximately one hour's drive south of the port.</div>
+    <div class="pop-body">Aid trucks entering Gaza through Zikim originate from Ashdod, bypassing the southern Kerem Shalom route entirely and directly supplying the isolated northern governorates.</div>
+    <span class="pop-tag pop-info">ZIKIM FEEDER PORT</span>
+    <span class="pop-tag pop-ok">NORTH GAZA SUPPLY CHAIN</span>
+    <div class="pop-source">Source: Chapter 4, §4.3.8 — Zikim Crossing</div>
+  `,
+
+            elArish: `
+    <div class="pop-header">// TRANSIT HUB — BOTTLENECK 01</div>
+    <div class="pop-title">El Arish Int'l Airport — Egypt</div>
+    <div class="pop-body">Primary staging hub for all Pakistani chartered flights. Located ~45–50 km from the Rafah border crossing. The Egyptian Red Crescent Society (ERCS) North Sinai branch receives cargo here and coordinates truck transport to the border. An ERCS logistics warehouse holds goods pending border clearance.</div>
+    <div class="pop-body">Items documented as denied entry into Gaza after Israeli inspection include: solar panels, water filters, and ultrasound machines.</div>
+    <span class="pop-tag pop-delay">MAJOR BOTTLENECK</span>
+    <span class="pop-tag pop-warn">ERCS HANDOVER POINT</span>
+    <span class="pop-tag pop-delay">ITEMS DENIED: SOLAR / FILTERS / ULTRASOUND</span>
+    <div class="pop-source">Source: Security Council Report (Dec 2023); Anadolu Agency — Chapter 4, §4.3.3</div>
+  `,
+
+            rafah: `
+    <div class="pop-header">// BORDER CROSSING — STATUS: RESTRICTED</div>
+    <div class="pop-title">Rafah Border Crossing — Egypt / Gaza</div>
+    <div class="pop-body">Closed indefinitely to humanitarian cargo as of March 1, 2026, following Israeli military control of the crossing. Intermittently reopened for limited medical evacuations only. Aid trucks from El Arish are diverted to Kerem Shalom.</div>
+    <div class="pop-body">Egypt established a new logistics zone in the Rafah area to reduce the ground-transport burden for drivers (~50 km from El Arish). The Rafah crossing sits within the Philadelphi Corridor — the 14 km militarily occupied buffer zone along the Gaza-Egypt border.</div>
+    <span class="pop-tag pop-delay">CLOSED TO AID (Mar 1, 2026)</span>
+    <span class="pop-tag pop-warn">MEDICAL EVACUATIONS ONLY</span>
+    <span class="pop-tag pop-delay">PHILADELPHI CORRIDOR ZONE</span>
+    <div class="pop-source">Source: WFP (Mar 2026); Egypt Independent (Feb 2024) — Chapter 4, §4.3.4 &amp; §4.3.5</div>
+  `,
+
+            keremShalom: `
+  <div class="pop-header">// FINAL CHECKPOINT — BOTTLENECK 02</div>
+  <div class="pop-title">Kerem Shalom Crossing (Israel–Gaza)</div>
+  <div class="pop-body">As of February 28, 2026, Kerem Shalom became the sole operational crossing for all humanitarian and commercial cargo into Gaza. All trucks must pass through Israeli COGAT (Coordination of Government Activities in the Territories) security inspection here before entry is permitted.</div>
+  <div class="pop-body">Between March 31 and April 5, 2026, 30% of all truckloads were returned to Egypt due to congestion and reduced opening hours. 70% of cargo that entered was offloaded before reaching beneficiaries during the same period.</div>
+  <div class="pop-stat">⚠ 30% TRUCK RETURN RATE (Apr 2026)</div>
+  <span class="pop-tag pop-delay">COGAT INSPECTION REQUIRED</span>
+  <span class="pop-tag pop-delay">SOLE CROSSING (Feb 28, 2026)</span>
+  <span class="pop-tag pop-warn">CONGESTION · REDUCED HOURS</span>
+  <div class="pop-source">Source: UN OCHA (Apr 2026); Reuters (Mar 2026) — Chapter 4, §4.3.6</div>
+`,
+
+            gazaCity: `
+    <div class="pop-header">// DESTINATION</div>
+    <div class="pop-title">Gaza Strip</div>
+    <div class="pop-body">Aid that successfully clears Kerem Shalom is distributed by UNRWA and partner organisations northward through Khan Yunis and Deir al-Balah into central and northern Gaza.</div>
+    <div class="pop-body">77% of internal roads are impassable or severely damaged, significantly increasing fuel consumption and travel time for all distributions.</div>
+    <div class="pop-stat">⚠ ~80% AID INTERCEPTED (May–Oct 2025)</div>
+    <span class="pop-tag pop-delay">LAST-MILE INTERCEPTION RISK</span>
+    <span class="pop-tag pop-info">UNRWA DISTRIBUTION</span>
+    <div class="pop-source">Source: UN OCHA (Oct 2025); UN OCHA (Apr 2026) — Chapter 4, §4.3.7</div>
+  `,
+
+            amman: `
+    <div class="pop-header">// ALTERNATE ROUTE HUB — ROUTE C</div>
+    <div class="pop-title">Queen Alia Int'l Airport — Amman, Jordan</div>
+    <div class="pop-body">Secondary route activated when El Arish access is restricted. Cargo received by the <strong style="color:#b8860b">Jordan Hashemite Charity Organization (JHCO)</strong> and <strong style="color:#b8860b">Royal Medical Services Jordan</strong>, who coordinate overland transport south via the King's Highway (Madaba → Karak → Wadi Musa/Petra → Aqaba), then north through the Wadi Araba valley into Israel to Kerem Shalom.</div>
+    <div class="pop-body">Consignments: 10th (40t, Sep 2024), 13th (100t, Oct 2024), 15th (40t, Apr 2025), 16th (97t, May 2025), 17th (100t, Aug 2025), 18th (100t, Aug 2025).</div>
+    <span class="pop-tag pop-warn">ALTERNATE ROUTE (ROUTE C)</span>
+    <span class="pop-tag pop-ok">JHCO + ROYAL MED SERVICES</span>
+    <div class="pop-source">Source: NDMA — Chapter 4, §4.5</div>
+  `,
+
+            zikim: `
+    <div class="pop-header">// NORTHERN CROSSING — INTERMITTENT</div>
+    <div class="pop-title">Zikim Crossing (Erez West) — North Gaza</div>
+    <div class="pop-body">Entry point specifically for North Gaza — the most inaccessible zone of the crisis. Aid trucks originate from Ashdod Port (~1 hour north). Closed for over 40 consecutive days before reopening April 13, 2026.</div>
+    <div class="pop-body">Under the Oct 2025 ceasefire, approximately 600 trucks/day combined (Zikim + Kerem Shalom) were permitted. OCHA Logistics Cluster: Aug 31–Sep 13, 2025 — 608 pallets entered via Zikim while Kerem Shalom was non-operational, demonstrating their complementary roles.</div>
+    <div class="pop-body">G2G: OCHA documented Jordan Government-to-Government convoys (Aug 3–16, 2025) — 15 of 22 trucks offloaded food items specifically at Zikim.</div>
+    <div class="pop-stat">✅ REOPENED: April 13, 2026</div>
+    <span class="pop-tag pop-warn">INTERMITTENT OPERATION</span>
+    <span class="pop-tag pop-info">NORTH GAZA — ASHDOD FEEDER</span>
+    <span class="pop-tag pop-ok">600 TRUCKS/DAY CEASEFIRE QUOTA</span>
+    <div class="pop-source">Source: UN OCHA (Apr 2026); OCHA Logistics Cluster (Sep 2025) — Chapter 4, §4.3.8</div>
+  `,
+
+            philadelphi: `
+    <div class="pop-header">// MILITARY BUFFER ZONE</div>
+    <div class="pop-title">Philadelphi (Salah al-Din) Corridor</div>
+    <div class="pop-body">A narrow buffer zone approximately 100 metres wide and 14 km long, running along the entire Gaza-Egypt border from Rafah in the north to Kerem Shalom in the south. Established under the 1978 Camp David Accords.</div>
+    <div class="pop-body">Israeli forces took control of the Palestinian side of this corridor in May 2024, directly halting all humanitarian aid trucks from entering through Rafah. All El Arish-to-Kerem Shalom convoys now pass through this militarily occupied zone.</div>
+    <span class="pop-tag pop-delay">MILITARILY OCCUPIED (May 2024)</span>
+    <span class="pop-tag pop-warn">14 KM · CAMP DAVID 1978</span>
+    <div class="pop-source">Source: NBC News (Sep 2024); Xinhua (Sep 2024) — Chapter 4, §4.3.5</div>
+  `,
+
+        };
+
+        // ── LAYER MANAGEMENT ──
+        let mainLayer = null;
+        let jordanLayer = null;
+        const allMarkers = {};
+
+        function clearAllLayers() {
+            if (mainLayer) { map.removeLayer(mainLayer); mainLayer = null; }
+            if (jordanLayer) { map.removeLayer(jordanLayer); jordanLayer = null; }
+            Object.values(allMarkers).forEach(m => map.removeLayer(m));
+            for (const k in allMarkers) delete allMarkers[k];
+        }
+
+        function addMarker(key, latlng, icon, popupHtml) {
+            const m = L.marker(latlng, { icon }).addTo(map);
+            m.bindPopup(popupHtml, { maxWidth: 320, minWidth: 260 });
+            allMarkers[key] = m;
+            return m;
+        }
+
+        function drawDashedLine(latlngs, color, dashArray = '8,6', weight = 4) {
+            return L.polyline(latlngs, { color, weight, dashArray, opacity: 0.85 });
+        }
+
+        function drawSolidLine(latlngs, color, weight = 4) {
+            return L.polyline(latlngs, { color, weight, opacity: 0.9 });
+        }
+
+        // ── ROUTE: MAIN (EGYPT) ──
+        function buildMain() {
+            clearAllLayers();
+            document.getElementById('legend-jordan').style.display = 'none';
+            document.getElementById('legend-philadelphi').style.display = 'flex';
+            mainLayer = L.layerGroup();
+
+            drawSolidLine([coords.lahore, coords.elArish], '#1a6fa8').addTo(mainLayer);
+            drawSolidLine([coords.karachi, coords.elArish], '#1a6fa8').addTo(mainLayer);
+            drawSolidLine(philadelphiCorridor, '#8e44ad').addTo(mainLayer);
+            drawSolidLine([coords.islamabad, coords.elArish], '#2980b9').addTo(mainLayer);
+
+            drawDashedLine(seaLaneKarachiToPortSaid, '#6e4fa8', '10,7', 2).addTo(mainLayer);
+            drawDashedLine(truckLanePortSaidToAlArish, '#b8860b', '6,5', 1.5).addTo(mainLayer);
+            drawDashedLine(roadElArishToRafah, '#b8860b', '6,5', 2.5).addTo(mainLayer);
+            drawDashedLine([coords.rafah, coords.keremShalom], '#c0392b', '4,4', 3.5).addTo(mainLayer);
+            drawDashedLine(roadKeremToGaza, '#1a8a4a', '10,7', 1.8).addTo(mainLayer);
+            drawDashedLine([coords.keremShalom, coords.zikim], '#1a8a4a', '6,4', 1.8).addTo(mainLayer);
+            drawDashedLine(roadAshdodToZikim, '#1a8a4a', '5,4', 1.6).addTo(mainLayer);
+
+            mainLayer.addTo(map);
+
+            addMarker('lahore', coords.lahore, makeIcon('✈ LAHORE', '#1a6fa8'), popups.lahore);
+            addMarker('karachi', coords.karachi, makeIcon('✈ KARACHI', '#1a6fa8'), popups.karachi);
+            addMarker('islamabad', coords.islamabad, makeIcon('✈ ISLAMABAD', '#2a7ab8'), popups.islamabad);
+            addMarker('portSaid', coords.portSaid, makeIcon('⚓ PORT SAID', '#6e4fa8'), popups.portSaid);
+            addMarker('ashdod', coords.ashdod, makeIcon('⚓ ASHDOD', '#7a8aaa'), popups.ashdod);
+            addMarker('elArish', coords.elArish, makeIcon('EL ARISH', '#b8860b'), popups.elArish);
+            addMarker('rafah', coords.rafah, makeIcon('RAFAH', '#c0392b'), popups.rafah);
+            addMarker('philadelphi', [31.248116, 34.257123], makeIcon('PHILADELPHI CORRIDOR', '#8e44ad'), popups.philadelphi);
+            addMarker('keremShalom', coords.keremShalom, makeIcon('KEREM SHALOM', '#c0392b'), popups.keremShalom);
+            addMarker('gazaCity', coords.gazaCity, makeIcon('GAZA', '#1a8a4a'), popups.gazaCity);
+            addMarker('zikim', coords.zikim, makeIcon('ZIKIM (N.GAZA)', '#1a8a4a'), popups.zikim);
+
+            map.setView([28, 48], 4);
+        }
+
+        // ── ROUTE: JORDAN (ALTERNATE) ──
+        function buildJordan() {
+            clearAllLayers();
+            document.getElementById('legend-jordan').style.display = 'flex';
+            document.getElementById('legend-philadelphi').style.display = 'flex';
+            jordanLayer = L.layerGroup();
+
+            drawSolidLine([coords.lahore, coords.elArish], '#d4cfc4').addTo(jordanLayer);
+            drawSolidLine([coords.karachi, coords.elArish], '#d4cfc4').addTo(jordanLayer);
+            drawDashedLine(roadElArishToRafah, '#c0c0b0', '6,5', 1.5).addTo(jordanLayer);
+            drawDashedLine([coords.rafah, coords.keremShalom], '#c0c0b0', '4,4', 1.5).addTo(jordanLayer);
+            drawDashedLine(roadKeremToGaza, '#c0c0b0', '10,7', 1.8).addTo(jordanLayer);
+
+            drawSolidLine([coords.karachi, coords.amman], '#c8680a').addTo(jordanLayer);
+            drawSolidLine([coords.islamabad, coords.amman], '#c8680a').addTo(jordanLayer);
+
+            drawDashedLine(seaLaneKarachiToAqaba, '#8e6fa8', '10,7', 1.8).addTo(jordanLayer);
+            drawDashedLine(roadAmmanToKerem, '#b8860b', '8,5', 2.5).addTo(jordanLayer);
+
+            drawDashedLine([coords.keremShalom, coords.zikim], '#1a8a4a', '6,4', 1.8).addTo(jordanLayer);
+            drawDashedLine(roadAshdodToZikim, '#1a8a4a', '5,4', 1.6).addTo(jordanLayer);
+
+            jordanLayer.addTo(map);
+
+            addMarker('lahore', coords.lahore, makeIcon('✈ LAHORE', '#9a9080'), popups.lahore);
+            addMarker('karachi', coords.karachi, makeIcon('✈ KARACHI', '#c8680a'), popups.karachi);
+            addMarker('islamabad', coords.islamabad, makeIcon('✈ ISLAMABAD', '#c8680a'), popups.islamabad);
+            addMarker('amman', coords.amman, makeIcon('⇢ AMMAN', '#c8680a'), popups.amman);
+            addMarker('elArish', coords.elArish, makeIcon('EL ARISH', '#c0c0b0'), popups.elArish);
+            addMarker('rafah', coords.rafah, makeIcon('RAFAH', '#c0392b'), popups.rafah);
+            addMarker('philadelphi', [31.255, 34.263], makeIcon('PHILADELPHI CORRIDOR', '#8e44ad'), popups.philadelphi);
+            addMarker('keremShalom', coords.keremShalom, makeIcon('KEREM SHALOM', '#c0392b'), popups.keremShalom);
+            addMarker('gazaCity', coords.gazaCity, makeIcon('GAZA', '#1a8a4a'), popups.gazaCity);
+            addMarker('zikim', coords.zikim, makeIcon('ZIKIM (N.GAZA)', '#1a8a4a'), popups.zikim);
+            addMarker('ashdod', coords.ashdod, makeIcon('⚓ ASHDOD', '#7a8aaa'), popups.ashdod);
+            addMarker('aqaba', coords.aqaba, makeIcon('⚓ AQABA', '#6e4fa8'), popups.aqaba);
+
+            map.setView([28, 48], 4);
+        }
+
+        // ── ROUTE SWITCHER ──
+        function showRoute(mode) {
+            const mapEl = document.getElementById('map');
+            const planbEl = document.getElementById('planb-view');
+            const legendEl = document.getElementById('map-legend');
+
+            ['btn-main', 'btn-jordan', 'btn-planb'].forEach(id =>
+                document.getElementById(id).classList.remove('active')
+            );
+
+            if (mode === 'planb') {
+                mapEl.style.display = 'none';
+                legendEl.style.display = 'none';
+                planbEl.classList.add('visible');
+                document.getElementById('btn-planb').classList.add('active');
+                clearAllLayers();
+
+            } else {
+                mapEl.style.display = 'block';
+                legendEl.style.display = 'block';
+                planbEl.classList.remove('visible');
+                if (mode === 'main') {
+                    document.getElementById('btn-main').classList.add('active');
+                    buildMain();
+                } else if (mode === 'jordan') {
+                    document.getElementById('btn-jordan').classList.add('active');
+                    buildJordan();
+                }
+                setTimeout(() => map.invalidateSize(), 50);
+            }
+        }
+
+        // Initial load
+        buildMain();
+    </script>
+</body>
+
+</html>

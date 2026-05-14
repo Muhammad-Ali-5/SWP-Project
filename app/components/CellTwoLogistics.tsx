@@ -35,7 +35,6 @@ import {
   PackageOpen,
   Wifi,
 } from "lucide-react";
-import RouteAssessment from "./RouteAssessment";
 
 // Bypass rigid Recharts 3.x generic typings for active props
 const TypedPie = Pie as any;
@@ -304,7 +303,20 @@ export default function CellTwoLogistics() {
         </div>
       </motion.div>
 
-        <RouteAssessment />
+      <motion.div variants={itemVariants} className="pt-8">
+        <h3 className="text-lg font-bold text-slate-700 mb-6 flex items-center gap-3 font-mono uppercase tracking-widest">
+          <ArrowRight className="w-5 h-5 text-cyan-600" />
+          [SYSTEM.LOGISTICS.MAP_VIEW]
+        </h3>
+
+        <div className="h-screen overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_20px_60px_-30px_rgba(15,23,42,0.35)]">
+          <iframe
+            src="/map.html"
+            title="Pakistan to Gaza logistics map"
+            className="h-full w-full border-0"
+          />
+        </div>
+      </motion.div>
 
       {/* PANEL 2: THE ECONOMIC ENGINE & 3 A's */}
       <motion.div variants={itemVariants} className="pt-8">
